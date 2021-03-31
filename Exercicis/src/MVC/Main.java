@@ -1,4 +1,4 @@
-package Exercicis.MVC;
+package MVC;
 
 import java.math.BigDecimal;
 import java.util.Observer;

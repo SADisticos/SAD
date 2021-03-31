@@ -1,8 +1,8 @@
-package Exercicis.MVC;
+package MVC;
 
 import java.util.Observable;
 import java.util.Observer;
-import Exercicis.MVC.Producto.PrecioEvent;
+import MVC.Producto.PrecioEvent;
 /**
  *
  * @author Enric
