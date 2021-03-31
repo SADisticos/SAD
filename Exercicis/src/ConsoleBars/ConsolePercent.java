@@ -23,7 +23,7 @@ class ConsolePercent implements Observer {
 		model = value;
 		
 		// get max columns
-		...
+		cmax = getColumns();
 		// write 0%
 		...
 	}
@@ -45,4 +45,9 @@ class ConsolePercent implements Observer {
 				break;
 		}
 	}
+        private static void getColumns(){
+            Process p = 
+            
+        }
+        private void restore(){}
 }

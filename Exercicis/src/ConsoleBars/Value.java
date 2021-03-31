@@ -2,6 +2,8 @@ package ConsoleBars;
 
 import java.util.*;
 
+// Modificar ConsolePercent a ConsoleBar y viceversa
+
 class Value extends Observable {
   int value, max;
   
@@ -12,20 +14,20 @@ class Value extends Observable {
   void inc() {
     setChanged();
     if (value == max)
-      notifyObservers(new Console.Command(Console.Opcode.BELL)); // push style
+      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL)); // push style
     else {
       value++;
-      notifyObservers(new Console.Command(Console.Opcode.INC));
+      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.INC));
     }
   }
   
   void dec() {
     setChanged();
     if (value == 0)
-      notifyObservers(new Console.Command(Console.Opcode.BELL));
+      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL));
     else {
       value--;
-      notifyObservers(new Console.Command(Console.Opcode.DEC));
+      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.DEC));
     }
   }
   
