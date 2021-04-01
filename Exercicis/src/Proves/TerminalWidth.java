@@ -15,7 +15,7 @@ public class TerminalWidth {
     
     public static int getColumns(){
         try{
-            Process p = Runtime.getRuntime().exec("tput cols");
+            Process p = Runtime.getRuntime().exec(new String[]{"bash", "-c", "tput cols 2> /dev/tty"});
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             
