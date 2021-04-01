@@ -12,8 +12,7 @@ public class RawMode {
     public static void main(String[] args) throws IOException, InterruptedException{
         String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
         Runtime.getRuntime().exec(cmd).waitFor();
-        Console console = System.console();
-        Reader reader = console.reader();
+        Reader reader = System.console().reader();
         StringBuilder line = new StringBuilder();
         int character = 0;
         System.out.print("Enter a phrase: ");
