@@ -1,3 +1,5 @@
+package Proves;
+
 public class EraseLine{
 	private static String CSI = "\033[";
 	private static String ERASELINE = "2K";

@@ -1,3 +1,5 @@
+package Proves;
+
 public class Beep{
 	public static void main(String[] args){
 		while(true){
