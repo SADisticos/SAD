@@ -16,10 +16,10 @@ public class RawMode {
         Reader reader = console.reader();
         StringBuilder line = new StringBuilder();
         int character = 0;
-        System.out.println("Enter your 8 character password: ");
-        while((character = reader.read()) != -1)
-            System.out.println(character);
+        System.out.print("Enter a phrase: ");
+        while((character = reader.read()) != 0x0D)  // Carriage return
             line.append((char)character);
+	System.out.println(line.toString());
         cmd = new String[] {"/bin/sh", "-c", "stty sane </dev/tty"};
         Runtime.getRuntime().exec(cmd).waitFor();
     }
