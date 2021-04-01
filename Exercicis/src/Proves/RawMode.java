@@ -18,6 +18,7 @@ public class RawMode {
         int character = 0;
         System.out.println("Enter your 8 character password: ");
         while((character = reader.read()) != -1)
+            System.out.println(character);
             line.append((char)character);
         cmd = new String[] {"/bin/sh", "-c", "stty sane </dev/tty"};
         Runtime.getRuntime().exec(cmd).waitFor();
