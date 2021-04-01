@@ -12,21 +12,38 @@ public class SlidePercent {
 
     private static void setRaw(){
         // put terminal in raw mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch(IOException| InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     private static void unsetRaw(){
         // restore terminal to cooked mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty sane </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch(IOException| InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     static final int RIGHT = 0, LEFT = 1;
     
     public static int readArrow() throws IOException{
         int ch;
-        
+        StringBuilder arrow = new StringBuilder();
         do{
             // read arrow key
             ch = in.read();
-            ...
+            if(arrow.append(ch).toString().equals(LEFT))
+                return LEFT;
+            else if (arrow.append(ch).toString().equals(RIGHT))
+                return RIGHT;
+            else if (arrow.charAt(0) != Const.ESC)
+                arrow.delete(0, arrow.length());
         } while (ch != '\r');
         return ch;
     }
@@ -40,7 +57,6 @@ public class SlidePercent {
             setRaw();
             value = new Value();
             con = new ConsolePercent(value);
-            ...
             value.addObserver(con);
            
             while((arrow = readArrow()) != '\r')
