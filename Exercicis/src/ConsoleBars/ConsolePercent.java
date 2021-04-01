@@ -26,7 +26,7 @@ class ConsolePercent implements Observer {
 	cmax = Proves.TerminalWidth.getColumns();
 	// write 0%
         model.setMax(cmax);
-        System.out.println(model.get() + "%");      // Starts at 0
+        System.out.print(model.get() + "%");      // Starts at 0
     }
 	
     int getMax() {
@@ -48,7 +48,7 @@ class ConsolePercent implements Observer {
                 System.out.print(Const.BEEP);
                 break;
             }
-        System.out.println(model.get() + "%");
+        System.out.print(model.get() + "%");
     }
         
     private void restore(){
