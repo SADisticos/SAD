@@ -41,17 +41,18 @@ public class SlidePercent {
             } catch(InterruptedException ex){
                 System.out.println(ex.getMessage());
             }
-            System.out.print(Const.CSI + Const.CURSORINITLINE);
-            System.out.print(Const.CSI + Const.ERASELINE);
-            
+            System.out.print(Const.CURSORINITLINE);
+            System.out.print(Const.ERASELINE);
             ch = in.read();
             System.out.print(arrow.append(ch).toString());
             
-            System.out.print(Const.CSI + Const.NEXTLINE);
-            System.out.print(Const.CSI + Const.CURSORINITLINE);
-            System.out.print(Const.CSI + Const.ERASELINE);
-            
+            System.out.print(Const.NEXTLINE);
+            System.out.print(Const.CURSORINITLINE);
+            System.out.print(Const.ERASELINE);
             System.out.print(arrow.charAt(0) != Const.ESC);
+            System.out.print(Const.PREVIOUSLINE);
+            
+            if(arrow.length() > 3) arrow.delete(0, arrow.length()-1);
             
             
             
