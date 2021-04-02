@@ -52,7 +52,7 @@ class ConsolePercent implements Observer {
     }
         
     private void restore(){
-        System.out.print(Const.CSI + Const.ERASELINE);
-        System.out.print(Const.CSI + Const.CURSORINITLINE);
+        System.out.print(Const.ERASELINE);
+        System.out.print(Const.CURSORINITLINE);
     }
 }
