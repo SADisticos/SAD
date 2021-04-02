@@ -52,7 +52,10 @@ public class SlidePercent {
             System.out.print(arrow.toString().equals(LEFT));
             System.out.print(Const.PREVIOUSLINE);
             
-            if(arrow.length() > 3 || arrow.charAt(0) != Const.ESC) arrow.delete(0, arrow.length());
+            if(arrow.length() > 3 || arrow.charAt(0) != Const.ESC){
+                System.out.print("Borro-" + arrow.toString());
+                arrow.delete(0, arrow.length());
+            }
             
             
             
