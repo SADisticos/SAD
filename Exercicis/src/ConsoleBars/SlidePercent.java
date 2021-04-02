@@ -41,9 +41,20 @@ public class SlidePercent {
             } catch(InterruptedException ex){
                 System.out.println(ex.getMessage());
             }
+            System.out.print(Const.CSI + Const.CURSORINITLINE);
             System.out.print(Const.CSI + Const.ERASELINE);
+            
             ch = in.read();
             System.out.print(arrow.append(ch).toString());
+            
+            System.out.print(Const.CSI + Const.NEXTLINE);
+            System.out.print(Const.CSI + Const.CURSORINITLINE);
+            System.out.print(Const.CSI + Const.ERASELINE);
+            
+            System.out.print(arrow.charAt(0) != Const.ESC);
+            
+            
+            
             /*// read arrow key
             ch = in.read();
             if(arrow.append(ch).toString().equals(LEFT))
