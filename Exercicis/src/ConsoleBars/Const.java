@@ -7,12 +7,14 @@ package ConsoleBars;
 public class Const {
     // Characters
     public static final int ESC = 27;
+    public static final char BEEP = '\007';
+    
     // Sequences
     public static final String CSI = "\033["; // ESC [
-    public static final String ERASELINE = "2K";
-    public static final String CURSORINITLINE = "G";
-    public static final char BEEP = '\007';
-    public static final String NEXTLINE = "E";
+    public static final String ERASELINE = CSI + "2K";
+    public static final String CURSORINITLINE = CSI + "G";
+    public static final String NEXTLINE = CSI + "E";
+    public static final String PREVIOUSLINE = CSI + "F";
     
     // Arrows
     public static final String UP = "279165";       // ESC[A
