@@ -60,7 +60,7 @@ public class SlidePercent {
             if(arrow.append(ch).toString().equals(LEFT))
                 return LEFT;
             else if (arrow.toString().equals(RIGHT))
-                return RIGHT;
+                return RIGHT; 
             else if (arrow.charAt(0) != Const.ESC)
                 arrow.delete(0, arrow.length());*/
         } while (ch != '\r');
