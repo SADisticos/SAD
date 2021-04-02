@@ -19,6 +19,6 @@ public class Const {
     // Arrows
     public static final String UP = "279165";       // ESC[A
     public static final String DOWN = "279166";     // ESC[B
-    public static final String RIGHT = "279167";    // ESC[C
-    public static final String LEFT = "279168";     // ESC[D
+    public static final String RIGHT = CSI + "C";    // ESC[C
+    public static final String LEFT = CSI + "D";     // ESC[D
 }
