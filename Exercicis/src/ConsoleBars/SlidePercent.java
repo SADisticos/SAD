@@ -38,8 +38,10 @@ public class SlidePercent {
             // read arrow key
             if ((ch = in.read()) == Const.ESC)
                 if ((ch = in.read()) == '[')
-                    if((ch = in.read()) == 'C')
+                    if((ch = in.read()) == 'C'){
+			System.out.print("Pollas");
                         return RIGHT;
+		    }
                     else if (ch == 'D')
                         return LEFT;
         } while (ch != '\r');
@@ -58,8 +60,10 @@ public class SlidePercent {
             value.addObserver(con);
            
             while((arrow = readArrow()) != '\r')
-                if (arrow == RIGHT)
+                if (arrow == RIGHT){
+		    System.out.print("Pene");
                     value.inc();
+		}
                 else
                     value.dec();
         }finally{
