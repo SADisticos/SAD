@@ -42,15 +42,16 @@ public class SlidePercent {
                 System.out.println(ex.getMessage());
             }
             System.out.print(Const.CSI + Const.ERASELINE);
-            System.out.print(arrow.toString());
-            // read arrow key
+            ch = in.read();
+            System.out.print(arrow.append(ch).toString());
+            /*// read arrow key
             ch = in.read();
             if(arrow.append(ch).toString().equals(LEFT))
                 return LEFT;
             else if (arrow.toString().equals(RIGHT))
                 return RIGHT;
             else if (arrow.charAt(0) != Const.ESC)
-                arrow.delete(0, arrow.length());
+                arrow.delete(0, arrow.length());*/
         } while (ch != '\r');
         return ch;
     }
