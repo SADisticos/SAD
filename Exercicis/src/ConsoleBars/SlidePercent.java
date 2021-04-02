@@ -37,7 +37,7 @@ public class SlidePercent {
         StringBuilder arrow = new StringBuilder();
         do{
             try{
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch(InterruptedException ex){
                 System.out.println(ex.getMessage());
             }
@@ -52,7 +52,7 @@ public class SlidePercent {
             System.out.print(arrow.charAt(0) != Const.ESC);
             System.out.print(Const.PREVIOUSLINE);
             
-            if(arrow.length() > 3) arrow.delete(0, arrow.length()-1);
+            if(arrow.length() > 6) arrow.delete(0, arrow.length()-1);
             
             
             
