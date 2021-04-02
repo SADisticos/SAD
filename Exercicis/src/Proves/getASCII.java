@@ -14,21 +14,21 @@ public class getASCII{
 		int sch = 0; // saved character
 		StringBuilder line = new StringBuilder();
 		System.out.println("Linea 1");
-		System.out.print(Const.CSI + Const.CURSORINITLINE);
+		System.out.print(Const.CURSORINITLINE);
 		System.out.print("Linea 2");
-		System.out.print(Const.CSI + "F");
+		System.out.print(Const.PREVIOUSLINE);
 		Thread.sleep(2000);
 		while((ch = reader.read()) != 0x0D){ // Carriage Return
 			line.append((char) ch); // For special character supress (char) and convert on ASCII table
-			System.out.print(Const.CSI + Const.ERASELINE);
+			System.out.print(Const.ERASELINE);
 			System.out.print(line.toString());
-			System.out.print(Const.CSI + Const.CURSORINITLINE);
+			System.out.print(Const.CURSORINITLINE);
 			
 			if(ch != sch ){
-				System.out.print(Const.CSI + "E");
-				System.out.print(Const.CSI + Const.ERASELINE);
+				System.out.print(Const.NEXTLINE);
+				System.out.print(Const.ERASELINE);
 				System.out.print(ch);
-				System.out.print(Const.CSI + "F");
+				System.out.print(Const.PREVIOUSLINE);
 				sch = ch;
 			}
 		}
