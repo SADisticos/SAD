@@ -36,11 +36,18 @@ public class SlidePercent {
         int ch;
         StringBuilder arrow = new StringBuilder();
         do{
+            try{
+                Thread.sleep(1000);
+            } catch(InterruptedException ex){
+                System.out.println(ex.getMessage());
+            }
+            System.out.print(Const.CSI + Const.ERASELINE);
+            System.out.print(arrow.toString());
             // read arrow key
             ch = in.read();
             if(arrow.append(ch).toString().equals(LEFT))
                 return LEFT;
-            else if (arrow.append(ch).toString().equals(RIGHT))
+            else if (arrow.toString().equals(RIGHT))
                 return RIGHT;
             else if (arrow.charAt(0) != Const.ESC)
                 arrow.delete(0, arrow.length());
