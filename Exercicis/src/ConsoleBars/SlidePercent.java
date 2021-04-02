@@ -44,7 +44,7 @@ public class SlidePercent {
             System.out.print(Const.CURSORINITLINE);
             System.out.print(Const.ERASELINE);
             ch = in.read();
-            System.out.print(arrow.append(ch).toString());
+            System.out.print(arrow.append((char)ch).toString());
             
             System.out.print(Const.NEXTLINE);
             System.out.print(Const.CURSORINITLINE);
@@ -52,7 +52,7 @@ public class SlidePercent {
             System.out.print(arrow.charAt(0) != Const.ESC);
             System.out.print(Const.PREVIOUSLINE);
             
-            if(arrow.length() > 6) arrow.delete(0, arrow.length()-1);
+            if(arrow.length() > 3) arrow.delete(0, arrow.length()-1);
             
             
             
