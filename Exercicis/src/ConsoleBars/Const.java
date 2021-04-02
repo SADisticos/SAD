@@ -12,6 +12,7 @@ public class Const {
     public static final String ERASELINE = "2K";
     public static final String CURSORINITLINE = "G";
     public static final char BEEP = '\007';
+    public static final String NEXTLINE = "E";
     
     // Arrows
     public static final String UP = "279165";       // ESC[A
