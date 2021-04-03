@@ -3,8 +3,8 @@ package Basic;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import Const.Const;
-
+import Other.Const;
+import Other.TerminalWidth;
 /**
  *
  * @author Enric
@@ -54,11 +54,62 @@ public class EditableBufferedReader extends BufferedReader{
         int ch;
         // Non special simbols
         if ((ch = super.read()) != Const.ESC)
-            
-        
-        return 0;
+            return ch;
+        // Special Simbols beginning with ESC
+        if ((ch = super.read()) != '[')
+            return ch;
+        // CSI - ESC [ 
+        if ((ch = super.read()) == '2'){ // Insert char - ESC [ 2 ~
+            if((ch = super.read()) == '~')
+                return Const.INS;
+            return ch;
+        }
+        return ch;  // Characters like arrows or home and end
     }
     
     @Override
-    public String readLine(){return null;}
+    public String readLine() throws IOException{
+        int ch;
+        Line line = new Line(TerminalWidth.getColumns());
+        boolean bell = false;
+        while ((ch = read()) != Const.ESC){
+            switch(ch){
+                //case Const.UP:
+                //    break;
+                //case Const.DOWN:
+                //    break;
+                case Const.RIGHT:
+                    bell = line.moveCursorForward();
+                    break;
+                case Const.LEFT:
+                    bell = line.moveCursorBackward();
+                    break;
+                case Const.DEL:
+                    bell = line.deleteCharForward();
+                    break;
+                case Const.BS: // BackSpace 
+                    bell = line.deleteCharBackward();
+                    break;
+                case Const.INS:
+                    if(line.insert())
+                        System.out.print(""); // Enable Cursor Blinking TODO
+                    else
+                        System.out.print(""); // Disable Cursor Blinking TODO
+                    break;
+                case Const.HOME:
+                    line.cursorAtStart();
+                    break;
+                case Const.END:
+                    line.cursorAtEnd();
+                    break;
+                default:
+                    bell = line.addChar((char) ch);
+                    break;
+            }
+            if (bell) 
+                System.out.print(Const.BEEP);
+            System.out.print(line.text());
+        }
+        return line.toString();
+    }
 }
