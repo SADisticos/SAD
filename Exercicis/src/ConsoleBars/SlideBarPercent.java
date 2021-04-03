@@ -6,6 +6,12 @@ import static java.lang.System.in;
 /**
  *
  * @author Enric
+ *
+ * BUGS -> SOLUTION
+ *       · Double bell -> Only one class and not reuse
+ *       · Not respect at all MVC standard -> Only one class
+ *       · Separated ValuePercent and ValueBar -> Only one class
+ *       · Init show Percent up -> Only one class 
  */
 public class SlideBarPercent {
 
