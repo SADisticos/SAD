@@ -33,11 +33,11 @@ public class SlideBarPercent {
         int arrow;
         ConsoleBar conBar = null;
         ConsolePercent conPer = null;
-        Value value = null;
+        ValuePercent value = null;
         
         try{
             setRaw();
-            value = new Value();
+            value = new ValuePercent();
             conBar = new ConsoleBar(value);
             ...
             conPer = new ConsolePercent(value);

@@ -4,30 +4,30 @@ import java.util.*;
 
 // Modificar ConsolePercent a ConsoleBar y viceversa
 
-class Value extends Observable {
+class ValueBar extends Observable {
   int value, max;
   
-  Value() {
+  ValueBar() {
     value = 0;
   }
   
   void inc() {
     setChanged();
     if (value == max){
-      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL)); // push style
+      notifyObservers(new ConsoleBar.Command(ConsoleBar.Opcode.BELL)); // push style
     }else {
       value++;
-      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.INC));
+      notifyObservers(new ConsoleBar.Command(ConsoleBar.Opcode.INC));
     }
   }
   
   void dec() {
     setChanged();
     if (value == 0)
-      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL));
+      notifyObservers(new ConsoleBar.Command(ConsoleBar.Opcode.BELL));
     else {
       value--;
-      notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.DEC));
+      notifyObservers(new ConsoleBar.Command(ConsoleBar.Opcode.DEC));
     }
   }
   

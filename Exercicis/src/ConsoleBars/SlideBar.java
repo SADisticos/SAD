@@ -48,11 +48,11 @@ public class SlideBar {
     public static void main(String[] args) throws IOException{
         int arrow;
         ConsoleBar con = null;
-        Value value = null;
+        ValueBar value = null;
         
         try{
             setRaw();
-            value = new Value();
+            value = new ValueBar();
             con = new ConsoleBar(value);
             value.addObserver(con);
             

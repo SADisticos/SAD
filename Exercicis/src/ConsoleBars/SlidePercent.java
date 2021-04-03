@@ -49,11 +49,11 @@ public class SlidePercent {
     public static void main(String[] args) throws IOException{
         int arrow;
         ConsolePercent con = null;
-        Value value = null;
+        ValuePercent value = null;
         
         try{
             setRaw();
-            value = new Value();
+            value = new ValuePercent();
             con = new ConsolePercent(value);
             value.addObserver(con);
            

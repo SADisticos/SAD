@@ -17,9 +17,9 @@ class ConsolePercent implements Observer {
     }
 
     int cmax;
-    Value model;
+    ValuePercent model;
   
-    ConsolePercent(Value value) {
+    ConsolePercent(ValuePercent value) {
         model = value;
 		
         // get max columns

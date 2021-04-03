@@ -17,10 +17,10 @@ class ConsoleBar implements Observer {
 	}
 
 	int cmax;
-	Value model;
+	ValueBar model;
 	static final char BLOCK = 0x2588; // ASCII Character
   
-	ConsoleBar(Value value) {
+	ConsoleBar(ValueBar value) {
 		model = value;
 		
 		// get max columns
