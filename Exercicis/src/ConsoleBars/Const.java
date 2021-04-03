@@ -8,6 +8,8 @@ public class Const {
     // Characters
     public static final int ESC = 27;
     public static final char BEEP = '\007';
+    public static final char BLOCK = 0x2588;
+
     
     // Sequences
     public static final String CSI = "\033["; // ESC [
