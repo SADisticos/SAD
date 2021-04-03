@@ -36,6 +36,6 @@ class ValueBar extends Observable {
   }
   
   void setMax(int max) {
-    this.max = max;
+    this.max = max-1;
   }
 }
