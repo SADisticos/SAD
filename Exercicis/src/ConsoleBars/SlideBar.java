@@ -10,10 +10,22 @@ public class SlideBar {
     
     private static void setRaw(){
         // pùt terminal in raw mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch (IOException|InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     private static void unsetRaw(){
         // restore terminal to cooked mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty sane </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch(IOException | InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     static final int RIGHT = 0, LEFT = 1;
@@ -23,8 +35,12 @@ public class SlideBar {
         
         do{
             // read arrow key
-            ch = in.read();
-            ...
+            if((ch = in.read()) == Const.ESC)
+                if((ch = in.read()) == '[')
+                    if ((ch = in.read()) == 'C')
+                        return RIGHT;
+                    else if (ch == 'D')
+                        return LEFT;
         } while(ch != '\r');
         return ch;
     }
@@ -38,7 +54,6 @@ public class SlideBar {
             setRaw();
             value = new Value();
             con = new ConsoleBar(value);
-            ...
             value.addObserver(con);
             
             while ((arrow = readArrow()) != '\r')

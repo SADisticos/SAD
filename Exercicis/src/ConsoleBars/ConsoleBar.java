@@ -18,12 +18,14 @@ class ConsoleBar implements Observer {
 
 	int cmax;
 	Value model;
-	static final char BLOCK = ...;
+	static final char BLOCK = 0x2588; // ASCII Character
   
 	ConsoleBar(Value value) {
 		model = value;
 		
 		// get max columns
+                cmax = Proves.TerminalWidth.getColumns();
+                model.setMax(cmax);
 	}
 	
 	int getMax() {
@@ -37,7 +39,9 @@ class ConsoleBar implements Observer {
 				System.out.print(BLOCK);
 				break;
 			case DEC:
-				// delete char to the left
+                                // delete char to the left
+                                System.out.print(Const.BACKWARD);
+                                System.out.print(Const.DELETECHAR);
 				break;
 			case BELL:
 				System.out.print('\007');
