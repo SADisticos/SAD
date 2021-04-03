@@ -54,10 +54,31 @@ public class EditableBufferedReader extends BufferedReader{
         int ch;
         // Non special simbols
         if ((ch = super.read()) != Const.ESC)
-            return ch;
+            switch(ch){
+                case Const.CR: case Const.LF:
+                    return Const.ESC;
+                case Const.BS:
+                    return Const.Key.BS;
+                default:
+                    return ch;
+            }
+        
         // Special Simbols beginning with ESC
-        if ((ch = super.read()) != '[')
-            return ch;
+        if ((ch = super.read()) == '[')
+            switch(super.read()){
+                case Const.RIGHT:
+                    return Const.Key.RIGHT;
+                case Const.LEFT:
+                    return Const.Key.LEFT;
+                case Const.UP:
+                    return Const.Key.UP;
+                case Const.DOWN:
+                    return Const.Key.DOWN;
+                case Const.HOME:
+                    return Const.Key.HOME;
+                case Const.DEL:
+                    return Const.Key.DEL;
+            }
         // CSI - ESC [ 
         if ((ch = super.read()) == '2'){ // Insert char - ESC [ 2 ~
             if((ch = super.read()) == '~')
@@ -72,34 +93,39 @@ public class EditableBufferedReader extends BufferedReader{
         int ch;
         Line line = new Line(TerminalWidth.getColumns());
         boolean bell = false;
+        
         while ((ch = read()) != Const.ESC){
             switch(ch){
                 //case Const.UP:
                 //    break;
                 //case Const.DOWN:
                 //    break;
-                case Const.RIGHT:
+                case Const.Key.RIGHT:
                     bell = line.moveCursorForward();
+                System.out.print(Const.MOVEFORWARD);
                     break;
-                case Const.LEFT:
+                case Const.Key.LEFT:
                     bell = line.moveCursorBackward();
+                    System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.DEL:
+                case Const.Key.DEL:
                     bell = line.deleteCharForward();
+                    System.out.print(Const.MOVEFORWARD);
                     break;
-                case Const.BS: // BackSpace 
+                case Const.Key.BS: // BackSpace 
                     bell = line.deleteCharBackward();
+                    System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.INS:
+                case Const.Key.INS:
                     if(line.insert())
-                        System.out.print(""); // Enable Cursor Blinking TODO
+                        System.out.print(Const.STARTBLINKCURSOR);
                     else
-                        System.out.print(""); // Disable Cursor Blinking TODO
+                        System.out.print(Const.STOPBLINKCURSOR);
                     break;
-                case Const.HOME:
+                case Const.Key.HOME:
                     line.cursorAtStart();
                     break;
-                case Const.END:
+                case Const.Key.END:
                     line.cursorAtEnd();
                     break;
                 default:
@@ -108,8 +134,14 @@ public class EditableBufferedReader extends BufferedReader{
             }
             if (bell) 
                 System.out.print(Const.BEEP);
-            System.out.print(line.text());
+            printText(line.text());
         }
         return line.toString();
+    }
+    
+    private static void printText(String line){
+        System.out.print(Const.ERASELINE);
+        System.out.print(Const.CURSORINITLINE);
+        System.out.print(line);
     }
 }

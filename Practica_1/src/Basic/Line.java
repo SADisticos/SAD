@@ -1,5 +1,6 @@
 package Basic;
 
+import Other.Const;
 /**
  *
  * @author Enric
@@ -21,7 +22,7 @@ public class Line {
             line.deleteCharAt(pos);
         if(line.length() < (maxLen-1)){ // Can be inserted
             line.insert(pos,c);
-            ++pos;
+            pos++;
             return false;
         }
         return true;
@@ -42,7 +43,7 @@ public class Line {
         }
         if (move == -1 && pos > 0){
             line.deleteCharAt(pos-1);
-            --pos;
+            pos--;
             return false;
         }
         return true;
@@ -81,7 +82,8 @@ public class Line {
     }
     
     public String text(){
-        return null;
+        return line.toString();
+        
     }
     
     @Override
