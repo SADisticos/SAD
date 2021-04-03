@@ -13,10 +13,11 @@ class Value extends Observable {
   
   void inc() {
     setChanged();
-    if (value == max)
+    if (value == max){
       notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL)); // push style
-    else {
+    }else {
       value++;
+      System.out.println("Valor: " + value + "/" + max);
       notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.INC));
     }
   }
