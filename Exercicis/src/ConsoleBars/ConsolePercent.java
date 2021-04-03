@@ -40,24 +40,17 @@ class ConsolePercent implements Observer {
 	System.out.print(comm.op);
 	switch (comm.op) {
             case INC:
-		System.out.print("Hola1");
-                model.inc();
-                break;
             case DEC:
-		System.out.print("Hola2");
-                model.dec();
+                System.out.print(model.get()%100 + "%");
                 break;
             case BELL:
-		System.out.print("Hola3");
                 System.out.print(Const.BEEP);
                 break;
-            }
-	System.out.print("Hola4");
-        System.out.print(model.get() + "%");
+        }
     }
         
     private void restore(){
-        //System.out.print(Const.ERASELINE);
-        //System.out.print(Const.CURSORINITLINE);
+        System.out.print(Const.ERASELINE);
+        System.out.print(Const.CURSORINITLINE);
     }
 }

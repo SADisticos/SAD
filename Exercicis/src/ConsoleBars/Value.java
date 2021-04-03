@@ -17,7 +17,7 @@ class Value extends Observable {
       notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.BELL)); // push style
     }else {
       value++;
-      System.out.println("Valor: " + value + "/" + max);
+      //System.out.println("Valor: " + value + "/" + max);
       notifyObservers(new ConsolePercent.Command(ConsolePercent.Opcode.INC));
     }
   }
