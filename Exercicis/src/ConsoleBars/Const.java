@@ -17,6 +17,8 @@ public class Const {
     public static final String CURSORINITLINE = CSI + "G";
     public static final String NEXTLINE = CSI + "E";
     public static final String PREVIOUSLINE = CSI + "F";
+    public static final String BACKWARD = CSI + "D";
+    public static final String DELETECHAR = CSI + "P";
     
     // Arrows
     public static final String UP = "279165";       // ESC[A
