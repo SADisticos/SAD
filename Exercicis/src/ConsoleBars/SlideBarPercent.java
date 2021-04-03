@@ -10,11 +10,23 @@ import static java.lang.System.in;
 public class SlideBarPercent {
 
     private static void setRaw(){
-        ...
+        // put terminal in raw mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch(IOException| InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     private static void unsetRaw(){
-        ...
+        // restore terminal to cooked mode
+        try{
+            String[] cmd = {"/bin/sh", "-c", "stty sane </dev/tty"};
+            Runtime.getRuntime().exec(cmd).waitFor();
+        } catch(IOException| InterruptedException ex){
+            System.out.println(ex.getMessage());
+        }
     }
     
     static final int RIGHT = 0, LEFT = 1;
@@ -23,8 +35,13 @@ public class SlideBarPercent {
         int ch;
         
         do{
-            ch = in.read();
-            ...
+            // read arrow key
+            if((ch = in.read()) == Const.ESC)
+                if((ch = in.read()) == '[')
+                    if ((ch = in.read()) == 'C')
+                        return RIGHT;
+                    else if (ch == 'D')
+                        return LEFT;
         } while (ch != '\r');
         return ch;
     }
@@ -33,26 +50,37 @@ public class SlideBarPercent {
         int arrow;
         ConsoleBar conBar = null;
         ConsolePercent conPer = null;
-        ValuePercent value = null;
+        ValuePercent valuePer = null;
+        ValueBar valueBar = null;
         
         try{
             setRaw();
-            value = new ValuePercent();
-            conBar = new ConsoleBar(value);
-            ...
-            conPer = new ConsolePercent(value);
-            ...
-            value.addObserver(conBar);
-            value.addObserver(conPer);
             
-            while((arrow == readArrow()) != '\r')
-                if (arrow == RIGHT)
-                    value.inc();
-                else
-                    value.dec();
+            valuePer = new ValuePercent();
+            conPer = new ConsolePercent(valuePer);
+            valuePer.addObserver(conPer);
+            
+            valueBar = new ValueBar();
+            conBar = new ConsoleBar(valueBar);
+            valueBar.addObserver(conBar);
+            
+            while((arrow = readArrow()) != '\r')
+                if (arrow == RIGHT){
+                    valueBar.inc();
+                    System.out.print(Const.NEXTLINE); // Mala praxis (no seguir MVC pero hay que cambiar todo sino)
+                    valuePer.inc();
+                    System.out.print(Const.PREVIOUSLINE);
+                    System.out.print(Const.CSI + valueBar.get() +'G'); // Move Absolute row
+                }
+                else{
+                    valueBar.dec();
+                    System.out.print(Const.NEXTLINE);
+                    valuePer.dec();
+                    System.out.print(Const.PREVIOUSLINE);
+                    System.out.print(Const.CSI + valueBar.get() + 'G');
+                }
         } finally {
             unsetRaw();
-            ...
         }
     }
 }
