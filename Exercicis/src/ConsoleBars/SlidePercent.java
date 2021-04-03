@@ -38,9 +38,8 @@ public class SlidePercent {
             // read arrow key
             if ((ch = in.read()) == Const.ESC)
                 if ((ch = in.read()) == '[')
-                    if((ch = in.read()) == 'C'){
+                    if((ch = in.read()) == 'C')
                         return RIGHT;
-		    }
                     else if (ch == 'D')
                         return LEFT;
         } while (ch != '\r');
