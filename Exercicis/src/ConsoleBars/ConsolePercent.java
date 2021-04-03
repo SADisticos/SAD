@@ -50,6 +50,6 @@ class ConsolePercent implements Observer {
     private void restore(){
         System.out.print(Const.ERASELINE);
         System.out.print(Const.CURSORINITLINE);
-        System.out.print((int)model.get()/100 + "%");
+        System.out.print((int)model.get()*100/cmax + "%");
     }
 }
