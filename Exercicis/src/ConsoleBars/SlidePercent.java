@@ -39,7 +39,6 @@ public class SlidePercent {
             if ((ch = in.read()) == Const.ESC)
                 if ((ch = in.read()) == '[')
                     if((ch = in.read()) == 'C'){
-			//System.out.print("Pollas");
                         return RIGHT;
 		    }
                     else if (ch == 'D')
@@ -61,7 +60,6 @@ public class SlidePercent {
            
             while((arrow = readArrow()) != '\r')
                 if (arrow == RIGHT){
-		    //System.out.print("Pene");
                     value.inc();
 		}
                 else

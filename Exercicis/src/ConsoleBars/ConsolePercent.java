@@ -37,11 +37,9 @@ class ConsolePercent implements Observer {
     public void update(Observable o, Object arg) {
         restore();
         Command comm = (Command) arg;
-	System.out.print(comm.op);
 	switch (comm.op) {
             case INC:
             case DEC:
-                System.out.print(model.get()%100 + "%");
                 break;
             case BELL:
                 System.out.print(Const.BEEP);
@@ -52,5 +50,6 @@ class ConsolePercent implements Observer {
     private void restore(){
         System.out.print(Const.ERASELINE);
         System.out.print(Const.CURSORINITLINE);
+        System.out.print((int)model.get()/100 + "%");
     }
 }
