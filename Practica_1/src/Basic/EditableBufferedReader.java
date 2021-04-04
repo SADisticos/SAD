@@ -134,14 +134,8 @@ public class EditableBufferedReader extends BufferedReader{
             }
             if (bell) 
                 System.out.print(Const.BEEP);
-            printText(line.text());
+            System.out.print(line.textToPrint());
         }
         return line.toString();
-    }
-    
-    private static void printText(String line){
-        System.out.print(Const.ERASELINE);
-        System.out.print(Const.CURSORINITLINE);
-        System.out.print(line);
     }
 }

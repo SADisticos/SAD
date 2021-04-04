@@ -6,23 +6,23 @@ import Other.Const;
  * @author Enric
  */
 public class Line {
-    private int pos, maxLen;
+    private int index, maxLen;
     private StringBuilder line;
     private boolean insertMode;
     
     public Line(int maxLen){
-        pos = 0;
+        index = 0;
         insertMode = false;
         this.maxLen = maxLen;
         line = new StringBuilder();
     }
     
     public boolean addChar(char c){
-        if(insertMode && pos < line.length()) // insert in the middle
-            line.deleteCharAt(pos);
+        if(insertMode && index < line.length()) // insert in the middle
+            line.deleteCharAt(index);
         if(line.length() < (maxLen-1)){ // Can be inserted
-            line.insert(pos,c);
-            pos++;
+            line.insert(index,c);
+            index++;
             return false;
         }
         return true;
@@ -37,13 +37,13 @@ public class Line {
     }
     
     public boolean deleteChar(int move){
-        if (move == 1 && pos < line.length()){
-            line.deleteCharAt(pos);
+        if (move == 1 && index < line.length()){
+            line.deleteCharAt(index);
             return false;
         }
-        if (move == -1 && pos > 0){
-            line.deleteCharAt(pos-1);
-            pos--;
+        if (move == -1 && index > 0){
+            line.deleteCharAt(index-1);
+            index--;
             return false;
         }
         return true;
@@ -57,33 +57,37 @@ public class Line {
         return moveCursor(-1);
     }
     public boolean moveCursor(int move){
-        pos += move;
-        if (pos > line.length()){
-            pos = line.length();
+        index += move;
+        if (index > line.length()){
+            index = line.length();
             return true;
         }
-        if (pos < 0){
-            pos = 0;
+        if (index < 0){
+            index = 0;
             return true;
         }
         return false;
     }
     
     public void cursorAtStart(){
-        pos = 0;
+        index = 0;
     }
     
     public void cursorAtEnd(){
-        pos = line.length();
+        index = line.length();
     }
     
     public boolean insert(){
         return insertMode = !insertMode;
     }
     
-    public String text(){
-        return line.toString();
-        
+    public String textToPrint(){
+        String text = new String("");
+        text += Const.CURSORINITLINE;
+        text += Const.ERASELINE;
+        text += line.toString();
+        text += Const.CSI + index + "G"; // Cursor absolute index
+        return text;
     }
     
     @Override
