@@ -86,7 +86,7 @@ public class Line {
         text += Const.CURSORINITLINE;
         text += Const.ERASELINE;
         text += line.toString();
-        text += Const.CSI + index + "G"; // Cursor absolute index
+        text += Const.CSI + (index+1) + "G"; // Cursor absolute index
         return text;
     }
     
