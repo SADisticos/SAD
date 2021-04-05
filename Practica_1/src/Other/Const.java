@@ -6,11 +6,15 @@ package Other;
  */
 public class Const {
     // Special Characters
-    public static final int ESC = 0x1b;         // Escape
-    public static final char CR = 0x0D;         // Carriage Return
-    public static final char LF = 0x0A;         // Line feed
-    public static final char BS = 0x08;         // Backspace
-    public static final char DEL = 0x7f;        // Delete
+    public static final byte ESC = 0x1B;         // Escape
+    public static final byte CR = 0x0D;         // Carriage Return
+    public static final byte LF = 0x0A;         // Line feed
+    public static final byte DEL = 0x7F;        // Delete
+    
+    // Special F- Characters
+    public static final byte F1 = 0x50;  // F1 (P)
+    public static final byte F2 = 0x51;  // F2 (Q)
+    public static final byte F3 = 0x52;  // F3 (R)
     
     // Other Character (ASCII + Other)
     public static final char BEEP = '\007';
@@ -35,12 +39,8 @@ public class Const {
     public static final char DOWN = 'B';
     public static final char RIGHT = 'C';
     public static final char LEFT = 'D';
-    public static final char BEGIN = 'E';
-    public static final char END = 'F';
-    public static final char HOME = 'H';
-    public static final char INS = '0'; // SPECIAL - NOT ASCII
     
-    public static class Key{
+    public static class Option{
         public static final int ESC = -1;
         public static final int UP = -2;
         public static final int DOWN = -3;
@@ -50,7 +50,7 @@ public class Const {
         public static final int DEL = -7;
         public static final int INS = -8;
         public static final int HOME = -9;
-        public static final int BS = -10;
+        public static final int SUPR = -10;
     }
     
 }

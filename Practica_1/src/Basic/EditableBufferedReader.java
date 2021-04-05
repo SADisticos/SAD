@@ -56,36 +56,40 @@ public class EditableBufferedReader extends BufferedReader{
         if ((ch = super.read()) != Const.ESC)
             switch(ch){
                 case Const.CR: case Const.LF:
-                    return Const.ESC;
-                case Const.BS:
-                    return Const.Key.BS;
+                    return Const.Option.ESC;
+                case Const.DEL:
+                    return Const.Option.DEL;
                 default:
                     return ch;
             }
         
         // Special Simbols beginning with ESC
-        if ((ch = super.read()) == '[')
-            switch(super.read()){
-                case Const.RIGHT:
-                    return Const.Key.RIGHT;
-                case Const.LEFT:
-                    return Const.Key.LEFT;
-                case Const.UP:
-                    return Const.Key.UP;
-                case Const.DOWN:
-                    return Const.Key.DOWN;
-                case Const.HOME:
-                    return Const.Key.HOME;
-                case Const.DEL:
-                    return Const.Key.DEL;
+        if ((ch = super.read()) == '['){
+            if ((ch = super.read()) == '3')
+                if((ch = super.read()) == '~')
+                    return Const.Option.SUPR;
+            if(ch == 'O'){
+                switch(ch = super.read()){
+                    case Const.F1:
+                        return Const.Option.HOME;
+                    case Const.F2:
+                        return Const.Option.INS;
+                    case Const.F3:
+                        return Const.Option.END;
+                }
             }
-        // CSI - ESC [ 
-        if ((ch = super.read()) == '2'){ // Insert char - ESC [ 2 ~
-            if((ch = super.read()) == '~')
-                return Const.INS;
-            return ch;
+            switch(ch){  // Arrows
+                case Const.RIGHT:
+                    return Const.Option.RIGHT;
+                case Const.LEFT:
+                    return Const.Option.LEFT;
+                case Const.UP:
+                    return Const.Option.UP;
+                case Const.DOWN:
+                    return Const.Option.DOWN;
+            }
         }
-        return ch;  // Characters like arrows or home and end
+        return ch;
     }
     
     @Override
@@ -100,32 +104,31 @@ public class EditableBufferedReader extends BufferedReader{
                 //    break;
                 //case Const.DOWN:
                 //    break;
-                case Const.Key.RIGHT:
+                case Const.Option.RIGHT:
                     bell = line.moveCursorForward();
                 System.out.print(Const.MOVEFORWARD);
                     break;
-                case Const.Key.LEFT:
+                case Const.Option.LEFT:
                     bell = line.moveCursorBackward();
                     System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.Key.DEL:
+                case Const.Option.SUPR:
                     bell = line.deleteCharForward();
-                    System.out.print(Const.MOVEFORWARD);
                     break;
-                case Const.Key.BS: // BackSpace 
+                case Const.Option.DEL: // BackSpace 
                     bell = line.deleteCharBackward();
                     System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.Key.INS:
+                case Const.Option.INS:
                     if(line.insert())
                         System.out.print(Const.STARTBLINKCURSOR);
                     else
                         System.out.print(Const.STOPBLINKCURSOR);
                     break;
-                case Const.Key.HOME:
+                case Const.Option.HOME:
                     line.cursorAtStart();
                     break;
-                case Const.Key.END:
+                case Const.Option.END:
                     line.cursorAtEnd();
                     break;
                 default:
