@@ -106,7 +106,7 @@ public class EditableBufferedReader extends BufferedReader{
     private int nextChar(){
         try {
             while(!sc.hasNext());    // Active wait loop until there's another char
-            int ch = (int) sc.next().charAt(0);
+            int ch = (int) sc.nextLine().charAt(0);
             Robot r = new Robot();
             r.keyPress(KeyEvent.VK_ENTER);
             return ch;
