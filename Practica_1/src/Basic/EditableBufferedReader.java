@@ -89,6 +89,7 @@ public class EditableBufferedReader extends BufferedReader{
                     return Const.Option.DOWN;
             }
         }
+        if(ch == Const.ESC) return Const.Option.ESC;
         return ch;
     }
     
@@ -98,11 +99,11 @@ public class EditableBufferedReader extends BufferedReader{
         Line line = new Line(TerminalWidth.getColumns());
         boolean bell = false;
         
-        while ((ch = read()) != Const.ESC){
+        while ((ch = read()) != Const.Option.ESC){
             switch(ch){
-                //case Const.UP:
+                //case Const.Option.UP:
                 //    break;
-                //case Const.DOWN:
+                //case Const.Option.DOWN:
                 //    break;
                 case Const.Option.RIGHT:
                     bell = line.moveCursorForward();
