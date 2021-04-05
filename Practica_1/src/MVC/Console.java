@@ -36,7 +36,9 @@ public class Console implements Observer{
                 System.out.print(Const.CURSORINITLINE);
                 System.out.print(Const.ERASELINE);
                 System.out.print(((Line)o).toString());
-                System.out.print(Const.CSI + (((Line)o).getIndex()+1) + "G");
+                System.out.print(Const.CSI + (((Line)o).getIndex()+1) + "G"); // Absolute Position
+                char option = ((Line)o).getInsertMode()?'h':'l';
+                System.out.print(Const.CSI + "?12" + option); // Blinking                        
                 break;
         }
     }

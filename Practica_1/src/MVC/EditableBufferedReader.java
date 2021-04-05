@@ -125,11 +125,7 @@ public class EditableBufferedReader extends BufferedReader{
                     line.deleteCharBackward();
                     break;
                 case Const.Option.INS:
-                    // TODO 
-                    if(line.insert())
-                        System.out.print(Const.STARTBLINKCURSOR);
-                    else
-                        System.out.print(Const.STOPBLINKCURSOR);
+                    line.insert();
                     break;
                 case Const.Option.HOME:
                     line.cursorAtStart();

@@ -90,12 +90,18 @@ public class Line extends Observable{
         notifyObservers(new Console.Command(Console.Opcode.REFRESH));
     }
     
-    public boolean insert(){
-        return insertMode = !insertMode;
+    public void insert(){
+        setChanged();
+        insertMode = !insertMode;
+        notifyObservers(new Console.Command(Console.Opcode.REFRESH));
     }
     
     public int getIndex(){
         return index;
+    }
+    
+    public boolean getInsertMode(){
+        return insertMode;
     }
     
     @Override
