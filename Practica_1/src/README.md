@@ -29,3 +29,4 @@ Info interessant:
 - https://programacion.net/articulo/beans_basico_110/9
 - https://es.wikipedia.org/wiki/JavaBean
 - https://docs.oracle.com/en/java/javase/11/docs/api/java.desktop/java/beans/PropertyChangeSupport.html
+- https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwiktcnH5efvAhWxaRUIHXa-BJUQFjABegQIBRAD&url=https%3A%2F%2Felvex.ugr.es%2Fdecsai%2Fjava%2Fpdf%2FC3-serializable.pdf&usg=AOvVaw3scSSKEHYovMcg42Gt9mJI
