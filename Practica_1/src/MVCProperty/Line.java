@@ -64,7 +64,7 @@ public class Line{
         else if (move == -1 && index > 0){
             line.deleteCharAt((index--)-1);
             pcs.firePropertyChange("text", oldLine, this.toString());
-            pcs.firePropertyChange("pos", oldIndex, index);
+            pcs.firePropertyChange("index", oldIndex, index);
         }
         else
             pcs.firePropertyChange("bell", false, true);
@@ -93,20 +93,20 @@ public class Line{
         }
         else{
             pcs.firePropertyChange("text",oldLine, this.toString());
-            pcs.firePropertyChange("pos", oldIndex, index);
+            pcs.firePropertyChange("index", oldIndex, index);
         }
     }
     
     public void cursorAtStart(){
         int oldIndex = index;
         index = 0;
-        pcs.firePropertyChange("pos", oldIndex, index);
+        pcs.firePropertyChange("index", oldIndex, index);
     }
     
     public void cursorAtEnd(){
         int oldIndex = index;
         index = line.length();
-        pcs.firePropertyChange("pos", oldIndex, index);
+        pcs.firePropertyChange("index", oldIndex, index);
     }
     
     public void insert(){
