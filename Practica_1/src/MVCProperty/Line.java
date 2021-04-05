@@ -92,7 +92,6 @@ public class Line{
             pcs.firePropertyChange("bell", false, true);
         }
         else{
-            pcs.firePropertyChange("text",oldLine, this.toString());
             pcs.firePropertyChange("index", oldIndex, index);
         }
     }
