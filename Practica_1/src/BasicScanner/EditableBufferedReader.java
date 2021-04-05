@@ -5,12 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import Other.Const;
 import Other.TerminalWidth;
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
