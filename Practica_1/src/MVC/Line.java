@@ -68,14 +68,14 @@ public class Line extends Observable{
         index += move;
         if (index > line.length()){
             index = line.length();
-            notifyObservers(new Console.Command(Console.Opcode.REFRESH));
+            notifyObservers(new Console.Command(Console.Opcode.BELL));
         }
         else if (index < 0){
             index = 0;
-            notifyObservers(new Console.Command(Console.Opcode.REFRESH));
+            notifyObservers(new Console.Command(Console.Opcode.BELL));
         }
         else
-            notifyObservers(new Console.Command(Console.Opcode.BELL));
+            notifyObservers(new Console.Command(Console.Opcode.REFRESH));
     }
     
     public void cursorAtStart(){
