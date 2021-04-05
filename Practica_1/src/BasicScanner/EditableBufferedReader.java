@@ -100,7 +100,7 @@ public class EditableBufferedReader extends BufferedReader{
     @SuppressWarnings("empty-statement")
     private int nextChar(){
         while(!sc.hasNext());    // Active wait loop until there's another char
-        return (int) sc.nextByte();
+        return (int) sc.next().charAt(0);
     }
     
     @Override
