@@ -21,5 +21,5 @@ Exercicis per resoldre (Practica_1/src/):
 - multiline: parser char a char amb edició multilínia (incorpora el moviment amunt i avall)
 - calculator: projecte de formulari bàsic com a calculadora bàsica de sencers
 
-Per què no utilitzar Scanner? \n
+Per què no utilitzar Scanner? </br>
 Scanner està pensada per ser utilitzada en arxius de texte i no lectura de lletres en temps real com si és el cas de read(). De fet, per poder introduir qualsevol dada s'ha d'utilitzar '\n'
