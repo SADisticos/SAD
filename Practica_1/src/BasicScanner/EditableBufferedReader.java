@@ -5,7 +5,12 @@ import java.io.IOException;
 import java.io.Reader;
 import Other.Const;
 import Other.TerminalWidth;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -99,8 +104,16 @@ public class EditableBufferedReader extends BufferedReader{
     
     @SuppressWarnings("empty-statement")
     private int nextChar(){
-        while(!sc.hasNext());    // Active wait loop until there's another char
-        return (int) sc.next().charAt(0);
+        try {
+            while(!sc.hasNext());    // Active wait loop until there's another char
+            int ch = (int) sc.next().charAt(0);
+            Robot r = new Robot();
+            r.keyPress(KeyEvent.VK_ENTER);
+            return ch;
+        } catch (AWTException ex) {
+            Logger.getLogger(EditableBufferedReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
     
     @Override
