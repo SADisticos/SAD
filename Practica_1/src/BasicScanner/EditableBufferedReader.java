@@ -104,17 +104,8 @@ public class EditableBufferedReader extends BufferedReader{
     
     @SuppressWarnings("empty-statement")
     private int nextChar(){
-        try {
-            //while(!sc.hasNext());    // Active wait loop until there's another char
-            
-            int ch = (int) sc.next().charAt(0);
-            Robot r = new Robot();
-            r.keyPress(KeyEvent.VK_ENTER);
-            return ch;
-        } catch (AWTException ex) {
-            Logger.getLogger(EditableBufferedReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
+        while(!sc.hasNext());    // Active wait loop until there's another char
+        return (int) sc.next().charAt(0);
     }
     
     @Override
