@@ -109,8 +109,8 @@ public class Line{
         pcs.firePropertyChange("pos", oldIndex, index);
     }
     
-    public boolean insert(){
-        return insertMode = !insertMode;
+    public void insert(){
+        pcs.firePropertyChange("insert", insertMode, insertMode = !insertMode);
     }
     
     public int getIndex(){

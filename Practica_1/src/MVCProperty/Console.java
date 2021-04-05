@@ -11,37 +11,33 @@ import java.beans.PropertyChangeListener;
 
 /* VIEW CLASS */
 
-public class Console implements PropertyChangeListener{
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    static enum Opcode{
-        BELL, REFRESH;
-    }
-    
-    static class Command{
-        Opcode op;
-        
-        Command(Opcode op){
-            this.op = op;
-        }
-    }
+public class Console implements PropertyChangeListener, java.io.Serializable{
+    private int index;
     
     @Override
-    public void update(Observable o, Object arg) {
-        Command comm = (Command) arg;
-        
-        switch(comm.op){
-            case BELL:
+    public void propertyChange(PropertyChangeEvent evt){
+        switch(evt.getPropertyName()){
+            case "bell":
                 System.out.print(Const.BEEP);
                 break;
-            case REFRESH:
+            
+            case "text":
                 System.out.print(Const.CURSORINITLINE);
                 System.out.print(Const.ERASELINE);
-                System.out.print(((Line)o).toString());
-                System.out.print(Const.CSI + (((Line)o).getIndex()+1) + "G");
+                System.out.print(evt.getNewValue());
+                System.out.print(Const.CSI + (index+1) + "G"); // Absolute Position
+                break;
+                
+            case "index":
+                index = (int) evt.getNewValue();
+                System.out.print(Const.CSI + (index+1) + "G");
+                break;
+                
+            case "insert":
+                if((boolean) evt.getNewValue())
+                    System.out.print(Const.STARTBLINKCURSOR);
+                else
+                    System.out.print(Const.STOPBLINKCURSOR);
                 break;
         }
     }
