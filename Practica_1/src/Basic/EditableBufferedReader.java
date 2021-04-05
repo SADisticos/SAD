@@ -68,16 +68,6 @@ public class EditableBufferedReader extends BufferedReader{
             if ((ch = super.read()) == '3')
                 if((ch = super.read()) == '~')
                     return Const.Option.SUPR;
-            if(ch == 'O'){
-                switch(ch = super.read()){
-                    case Const.F1:
-                        return Const.Option.HOME;
-                    case Const.F2:
-                        return Const.Option.INS;
-                    case Const.F3:
-                        return Const.Option.END;
-                }
-            }
             switch(ch){  // Arrows
                 case Const.RIGHT:
                     return Const.Option.RIGHT;
@@ -89,7 +79,17 @@ public class EditableBufferedReader extends BufferedReader{
                     return Const.Option.DOWN;
             }
         }
-        if(ch == Const.ESC) return Const.Option.ESC;
+        else if(ch == 'O')                 // F_ Characters
+            switch(ch = super.read()){
+                case Const.F1:
+                    return Const.Option.HOME;
+                case Const.F2:
+                    return Const.Option.INS;
+                case Const.F3:
+                    return Const.Option.END;
+            }
+        else if(ch == Const.ESC)
+            return Const.Option.ESC;
         return ch;
     }
     
