@@ -25,7 +25,7 @@ public class TestReadLine {
     
     private static void init(){
         try{
-            System.out.print("There special characters. Be careful because some special char combination may be not available.");
+            System.out.print("There are special characters. Be careful because some special char combination may be not available.");
             Thread.sleep(2000);
             System.out.print(Const.CURSORINITLINE);
             System.out.print(Const.ERASELINE);

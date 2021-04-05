@@ -19,7 +19,7 @@ public class getASCII{
 		System.out.print(Const.PREVIOUSLINE);
 		Thread.sleep(2000);
 		while((ch = reader.read()) != 0x0D){ // Carriage Return
-			line.append((char) ch); // For special character supress (char) and convert on ASCII table
+			line.append( ch); // For special character supress (char) and convert on ASCII table
 			System.out.print(Const.ERASELINE);
 			System.out.print(line.toString());
 			System.out.print(Const.CURSORINITLINE);
