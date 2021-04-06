@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.Reader;
 import Other.Const;
 import Other.TerminalWidth;
+import Other.Trie;
+import Other.Trie.TrieNode;
 
 
 /**
@@ -17,6 +19,7 @@ import Other.TerminalWidth;
 public class EditableBufferedReader extends BufferedReader{
     private Line line;
     private Console con;
+    private TrieNode root;
     /**
      * Editable buffering-input stream which uses default-sized input buffer (8 Kb)
      * @param in
@@ -26,6 +29,9 @@ public class EditableBufferedReader extends BufferedReader{
         line = new Line(TerminalWidth.getColumns());
         con = new Console();
         line.addPropertyChangeListener(con);
+        root = new TrieNode();
+        Trie.initTree();
+        
     }
     
     /**
@@ -60,77 +66,46 @@ public class EditableBufferedReader extends BufferedReader{
     @Override
     public int read() throws IOException{
         
-        int ch;
-        // Non special simbols
-        if ((ch = super.read()) != Const.ESC)
-            switch(ch){
-                case Const.CR: case Const.LF:
-                    return Const.Option.ESC;
-                case Const.DEL:
-                    return Const.Option.DEL;
-                default:
-                    return ch;
-            }
+        StringBuilder str = new StringBuilder();
+        int option = Const.option.YES;
         
-        // Special Simbols beginning with ESC
-        if ((ch = super.read()) == '['){
-            if ((ch = super.read()) == '3')
-                if((ch = super.read()) == '~')
-                    return Const.Option.SUPR;
-            switch(ch){  // Arrows
-                case Const.RIGHT:
-                    return Const.Option.RIGHT;
-                case Const.LEFT:
-                    return Const.Option.LEFT;
-                case Const.UP:
-                    return Const.Option.UP;
-                case Const.DOWN:
-                    return Const.Option.DOWN;
-            }
+        while(option == Const.option.YES){
+            option = Trie.search(str.append(super.read()).toString());
         }
-        else if(ch == 'O')                 // F_ Characters
-            switch(ch = super.read()){
-                case Const.F1:
-                    return Const.Option.HOME;
-                case Const.F2:
-                    return Const.Option.INS;
-                case Const.F3:
-                    return Const.Option.END;
-            }
-        else if(ch == Const.ESC)
-            return Const.Option.ESC;
-        return ch;
+        if(option == Const.option.NO)
+            return str.charAt(str.length());
+        return option;
     }
     
     @Override
     public String readLine() throws IOException{
         int ch;
         
-        while ((ch = read()) != Const.Option.ESC){
+        while ((ch = read()) != Const.option.ESC){
             switch(ch){
                 //case Const.Option.UP:
                 //    break;
                 //case Const.Option.DOWN:
                 //    break;
-                case Const.Option.RIGHT:
+                case Const.option.RIGHT:
                     line.moveCursorForward();
                     break;
-                case Const.Option.LEFT:
+                case Const.option.LEFT:
                     line.moveCursorBackward();
                     break;
-                case Const.Option.SUPR:
+                case Const.option.SUPR:
                     line.deleteCharForward();
                     break;
-                case Const.Option.DEL: // BackSpace 
+                case Const.option.DEL: // BackSpace 
                     line.deleteCharBackward();
                     break;
-                case Const.Option.INS:
+                case Const.option.INS:
                     line.insert();
                     break;
-                case Const.Option.HOME:
+                case Const.option.HOME:
                     line.cursorAtStart();
                     break;
-                case Const.Option.END:
+                case Const.option.END:
                     line.cursorAtEnd();
                     break;
                 default:
