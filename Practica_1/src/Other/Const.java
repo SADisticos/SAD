@@ -21,8 +21,8 @@ public class Const {
     public static final char BLOCK = 0x2588;
 
     
-    // Sequences
-    public static final String CSI = "\033["; // ESC [
+    // Sequences Terminal
+    public static final String CSI = ESC + "["; // ESC [
     public static final String ERASELINE = CSI + "2K";
     public static final String CURSORINITLINE = CSI + "G";
     public static final String NEXTLINE = CSI + "E";
@@ -34,11 +34,28 @@ public class Const {
     public static final String MOVEFORWARD = CSI + "C";
     public static final String MOVEBACKWARD = CSI + "D";
     
-    // CSI (ESC[) keys
+    
+    // Entry sequences + CSI
     public static final char UP  = 'A';
     public static final char DOWN = 'B';
     public static final char RIGHT = 'C';
     public static final char LEFT = 'D';
+        
+    // Entry sequences for Trie
+    public static class Trie{
+        public static final String ESC = String.valueOf(Const.ESC);
+        public static final String CR = String.valueOf(Const.CR);
+        public static final String LF = String.valueOf(Const.LF);
+        public static final String DEL = String.valueOf(Const.DEL);
+        public static final String SUPR = CSI + "3~";
+        public static final String UP  = CSI + 'A';
+        public static final String DOWN = CSI + 'B';
+        public static final String RIGHT = CSI + 'C';
+        public static final String LEFT = CSI + 'D';
+        public static final String F1 = ESC + "O" + Const.F1;
+        public static final String F2 = ESC + "O" + Const.F2;
+        public static final String F3 = ESC + "O" + Const.F3;
+    }
     
     public static class Option{
         public static final int ESC = -1;
