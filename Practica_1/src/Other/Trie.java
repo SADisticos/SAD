@@ -1,6 +1,5 @@
 package Other;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Trie {
 
-    // number of instructions
+    // Alphabet size (# of symbols)
     static final int ASCII = 127;
 
     
@@ -46,6 +45,7 @@ public class Trie {
         
         for (level = 0; level < length; level++){
             index = key.charAt(level);
+            
             
             if (pCrawl.children[index] == null)
                 pCrawl.children[index] = new TrieNode();
@@ -90,11 +90,17 @@ public class Trie {
                 .collect(Collectors.toList());
         ListIterator it = constantValues.listIterator();
         while(it.hasNext())
-            System.out.println((String) it.next());
+            insert((String) it.next());
     }
-    
+    /*
     public static void main(String[] args){
+        root = new TrieNode();
         initTree();
+        
+        if(search(Const.CSI + Const.LEFT) == true) 
+            System.out.println("Yep! Funciona!!!");
+        else 
+            System.out.println("Me cago en todo!!!!!");
     }
-       
+    */   
 }
