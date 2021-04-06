@@ -17,7 +17,6 @@ public class MyServerSocket {
     
     
     
-    
      /* PART DEL CODI QUE FA REFERÈNCIA A LES CLASSES D'ESCRIPUTRA I LECTURA , MÈTODES PRINCIPALS SOBREESCRITS */
  //---------------------------------------------------------------------------------------------------------------------------------------------------    
     
