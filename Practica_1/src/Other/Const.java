@@ -42,8 +42,8 @@ public class Const {
     public static final char LEFT = 'D';
         
     // Entry sequences for Trie
-    public static class Trie{
-        public static final String ESC = String.valueOf(Const.ESC);
+    public static class sequence{
+        public static final String ESC = String.valueOf(Const.ESC) + String.valueOf(Const.ESC);
         public static final String CR = String.valueOf(Const.CR);
         public static final String LF = String.valueOf(Const.LF);
         public static final String DEL = String.valueOf(Const.DEL);
@@ -52,22 +52,26 @@ public class Const {
         public static final String DOWN = CSI + 'B';
         public static final String RIGHT = CSI + 'C';
         public static final String LEFT = CSI + 'D';
-        public static final String F1 = ESC + "O" + Const.F1;
-        public static final String F2 = ESC + "O" + Const.F2;
-        public static final String F3 = ESC + "O" + Const.F3;
+        public static final String F1 = Const.ESC + "O" + Const.F1;
+        public static final String F2 = Const.ESC + "O" + Const.F2;
+        public static final String F3 = Const.ESC + "O" + Const.F3;
     }
     
-    public static class Option{
+    public static class option{ // DO NOT MODIFY - ORDER FOR TRIE 
         public static final int ESC = -1;
-        public static final int UP = -2;
-        public static final int DOWN = -3;
-        public static final int RIGHT = -4;
-        public static final int LEFT = -5;
-        public static final int END = -6;
-        public static final int DEL = -7;
-        public static final int INS = -8;
-        public static final int HOME = -9;
-        public static final int SUPR = -10;
+        public static final int CR = -1;
+        public static final int LF = -1;
+        public static final int DEL = -2;
+        public static final int SUPR = -3;
+        public static final int UP = -4;
+        public static final int DOWN = -5;
+        public static final int RIGHT = -6;
+        public static final int LEFT = -7;
+        public static final int HOME = -8;
+        public static final int INS = -9;
+        public static final int END = -10;
+        public static final int YES = -1000; // Character for continuing in the trie
+        public static final int NO = 0;      // Not continue in trie
     }
     
 }
