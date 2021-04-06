@@ -65,9 +65,9 @@ public class EditableBufferedReader extends BufferedReader{
         if ((ch = super.read()) != Const.ESC)
             switch(ch){
                 case Const.CR: case Const.LF:
-                    return Const.Option.ESC;
+                    return Const.option.ESC;
                 case Const.DEL:
-                    return Const.Option.DEL;
+                    return Const.option.DEL;
                 default:
                     return ch;
             }
@@ -76,29 +76,29 @@ public class EditableBufferedReader extends BufferedReader{
         if ((ch = super.read()) == '['){
             if ((ch = super.read()) == '3')
                 if((ch = super.read()) == '~')
-                    return Const.Option.SUPR;
+                    return Const.option.SUPR;
             switch(ch){  // Arrows
                 case Const.RIGHT:
-                    return Const.Option.RIGHT;
+                    return Const.option.RIGHT;
                 case Const.LEFT:
-                    return Const.Option.LEFT;
+                    return Const.option.LEFT;
                 case Const.UP:
-                    return Const.Option.UP;
+                    return Const.option.UP;
                 case Const.DOWN:
-                    return Const.Option.DOWN;
+                    return Const.option.DOWN;
             }
         }
         else if(ch == 'O')                 // F_ Characters
             switch(ch = super.read()){
                 case Const.F1:
-                    return Const.Option.HOME;
+                    return Const.option.HOME;
                 case Const.F2:
-                    return Const.Option.INS;
+                    return Const.option.INS;
                 case Const.F3:
-                    return Const.Option.END;
+                    return Const.option.END;
             }
         else if(ch == Const.ESC)
-            return Const.Option.ESC;
+            return Const.option.ESC;
         return ch;
     }
     
@@ -106,31 +106,31 @@ public class EditableBufferedReader extends BufferedReader{
     public String readLine() throws IOException{
         int ch;
         
-        while ((ch = read()) != Const.Option.ESC){
+        while ((ch = read()) != Const.option.ESC){
             switch(ch){
                 //case Const.Option.UP:
                 //    break;
                 //case Const.Option.DOWN:
                 //    break;
-                case Const.Option.RIGHT:
+                case Const.option.RIGHT:
                     line.moveCursorForward();
                     break;
-                case Const.Option.LEFT:
+                case Const.option.LEFT:
                     line.moveCursorBackward();
                     break;
-                case Const.Option.SUPR:
+                case Const.option.SUPR:
                     line.deleteCharForward();
                     break;
-                case Const.Option.DEL: // BackSpace 
+                case Const.option.DEL: // BackSpace 
                     line.deleteCharBackward();
                     break;
-                case Const.Option.INS:
+                case Const.option.INS:
                     line.insert();
                     break;
-                case Const.Option.HOME:
+                case Const.option.HOME:
                     line.cursorAtStart();
                     break;
-                case Const.Option.END:
+                case Const.option.END:
                     line.cursorAtEnd();
                     break;
                 default:

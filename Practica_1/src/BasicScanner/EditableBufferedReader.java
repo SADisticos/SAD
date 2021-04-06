@@ -60,9 +60,9 @@ public class EditableBufferedReader extends BufferedReader{
         if ((ch = nextChar()) != Const.ESC)
             switch(ch){
                 case Const.CR: case Const.LF:
-                    return Const.Option.ESC;
+                    return Const.option.ESC;
                 case Const.DEL:
-                    return Const.Option.DEL;
+                    return Const.option.DEL;
                 default:
                     return ch;
             }
@@ -71,29 +71,29 @@ public class EditableBufferedReader extends BufferedReader{
         if ((ch = nextChar()) == '['){
             if ((ch = nextChar()) == '3')
                 if((ch = nextChar()) == '~')
-                    return Const.Option.SUPR;
+                    return Const.option.SUPR;
             switch(ch){  // Arrows
                 case Const.RIGHT:
-                    return Const.Option.RIGHT;
+                    return Const.option.RIGHT;
                 case Const.LEFT:
-                    return Const.Option.LEFT;
+                    return Const.option.LEFT;
                 case Const.UP:
-                    return Const.Option.UP;
+                    return Const.option.UP;
                 case Const.DOWN:
-                    return Const.Option.DOWN;
+                    return Const.option.DOWN;
             }
         }
         else if(ch == 'O')                 // F_ Characters
             switch(ch = nextChar()){
                 case Const.F1:
-                    return Const.Option.HOME;
+                    return Const.option.HOME;
                 case Const.F2:
-                    return Const.Option.INS;
+                    return Const.option.INS;
                 case Const.F3:
-                    return Const.Option.END;
+                    return Const.option.END;
             }
         else if(ch == Const.ESC)
-            return Const.Option.ESC;
+            return Const.option.ESC;
         return ch;
     }
     
@@ -109,37 +109,37 @@ public class EditableBufferedReader extends BufferedReader{
         Line line = new Line(TerminalWidth.getColumns());
         boolean bell = false;
         
-        while ((ch = readScanner()) != Const.Option.ESC){
+        while ((ch = readScanner()) != Const.option.ESC){
             switch(ch){
                 //case Const.Option.UP:
                 //    break;
                 //case Const.Option.DOWN:
                 //    break;
-                case Const.Option.RIGHT:
+                case Const.option.RIGHT:
                     bell = line.moveCursorForward();
                 System.out.print(Const.MOVEFORWARD);
                     break;
-                case Const.Option.LEFT:
+                case Const.option.LEFT:
                     bell = line.moveCursorBackward();
                     System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.Option.SUPR:
+                case Const.option.SUPR:
                     bell = line.deleteCharForward();
                     break;
-                case Const.Option.DEL: // BackSpace 
+                case Const.option.DEL: // BackSpace 
                     bell = line.deleteCharBackward();
                     System.out.print(Const.MOVEBACKWARD);
                     break;
-                case Const.Option.INS:
+                case Const.option.INS:
                     if(line.insert())
                         System.out.print(Const.STARTBLINKCURSOR);
                     else
                         System.out.print(Const.STOPBLINKCURSOR);
                     break;
-                case Const.Option.HOME:
+                case Const.option.HOME:
                     line.cursorAtStart();
                     break;
-                case Const.Option.END:
+                case Const.option.END:
                     line.cursorAtEnd();
                     break;
                 default:
