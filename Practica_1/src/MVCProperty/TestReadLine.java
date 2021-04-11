@@ -8,6 +8,7 @@ import java.io.*;
  */
 
 public class TestReadLine {
+    @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] args){
         BufferedReader in = new EditableBufferedReader(new InputStreamReader(System.in));
         String str = null;
@@ -23,6 +24,7 @@ public class TestReadLine {
         System.out.println("\nline is: " + str);
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     private static void init(){
         try{
             System.out.print("There are special characters. Be careful because some special char combination may be not available.");

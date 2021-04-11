@@ -6,7 +6,6 @@ import java.io.Reader;
 import Other.Const;
 import Other.TerminalWidth;
 import Other.Trie;
-import Other.Trie.TrieNode;
 
 
 /**
@@ -17,9 +16,9 @@ import Other.Trie.TrieNode;
 /* CONTROLLER CLASS */
 
 public class EditableBufferedReader extends BufferedReader{
-    private Line line;
-    private Console con;
-    private TrieNode root;
+    private final Line line;
+    private final Console con;
+    private final Trie trie;
     /**
      * Editable buffering-input stream which uses default-sized input buffer (8 Kb)
      * @param in
@@ -29,8 +28,7 @@ public class EditableBufferedReader extends BufferedReader{
         line = new Line(TerminalWidth.getColumns());
         con = new Console();
         line.addPropertyChangeListener(con);
-        root = new TrieNode();
-        Trie.initTree();
+        trie = new Trie(Const.trieMap.trieMap);
         
     }
     
@@ -39,8 +37,7 @@ public class EditableBufferedReader extends BufferedReader{
      */
     public static void setRaw(){
         try{
-            String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
-            Runtime.getRuntime().exec(cmd).waitFor();
+            Runtime.getRuntime().exec("/bin/stty -f /dev/tty -echo raw").waitFor();
         } catch(IOException| InterruptedException ex){
             System.out.println(ex.getMessage());
         }
@@ -51,8 +48,7 @@ public class EditableBufferedReader extends BufferedReader{
      */
     public static void unsetRaw(){
         try{
-            String[] cmd = {"/bin/sh", "-c", "stty sane </dev/tty"};
-            Runtime.getRuntime().exec(cmd).waitFor();
+            Runtime.getRuntime().exec("/bin/stty -f /dev/tty -echo cooked").waitFor();
         } catch(IOException| InterruptedException ex){
             System.out.println(ex.getMessage());
         }
@@ -64,16 +60,16 @@ public class EditableBufferedReader extends BufferedReader{
      * @return The character read as an integer or -1 if the end of the stream has been reached
      */
     @Override
+    @SuppressWarnings("empty-statement")
     public int read() throws IOException{
         
         StringBuilder str = new StringBuilder();
-        int option = Const.option.YES;
+        int option;
         
-        while(option == Const.option.YES){
-            option = Trie.search(str.append(super.read()).toString());
-        }
+        while((option = trie.search(str.append((char) super.read()).toString())) == Const.option.YES);
+        
         if(option == Const.option.NO)
-            return str.charAt(str.length());
+            return str.charAt(str.length()-1);
         return option;
     }
     
@@ -83,36 +79,24 @@ public class EditableBufferedReader extends BufferedReader{
         
         while ((ch = read()) != Const.option.ESC){
             switch(ch){
-                //case Const.Option.UP:
-                //    break;
-                //case Const.Option.DOWN:
-                //    break;
-                case Const.option.RIGHT:
-                    line.moveCursorForward();
-                    break;
-                case Const.option.LEFT:
-                    line.moveCursorBackward();
-                    break;
-                case Const.option.SUPR:
-                    line.deleteCharForward();
-                    break;
-                case Const.option.DEL: // BackSpace 
-                    line.deleteCharBackward();
-                    break;
-                case Const.option.INS:
-                    line.insert();
-                    break;
-                case Const.option.HOME:
-                    line.cursorAtStart();
-                    break;
-                case Const.option.END:
-                    line.cursorAtEnd();
-                    break;
-                default:
-                    line.addChar((char) ch);
-                    break;
+                case Const.option.RIGHT -> line.moveCursorForward();
+                case Const.option.LEFT -> line.moveCursorBackward();
+                case Const.option.SUPR -> line.deleteCharForward();
+                case Const.option.DEL -> line.deleteCharBackward();  // BackSpace
+                case Const.option.INS -> line.insert();
+                case Const.option.HOME -> line.cursorAtStart();
+                case Const.option.END -> line.cursorAtEnd();
+                case Const.option.TAB -> {
+                    for(int i = 0; i < 5; i++)
+                        line.addChar(' ');
+                }
+                default -> line.addChar((char) ch);
             }
-        }
+            //case Const.Option.UP:
+            //    break;
+            //case Const.Option.DOWN:
+            //    break;
+                    }
         return line.toString();
     }
 }
