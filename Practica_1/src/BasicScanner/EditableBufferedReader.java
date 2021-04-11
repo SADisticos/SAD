@@ -57,9 +57,9 @@ public class EditableBufferedReader extends BufferedReader{
         
         int ch;
         // Non special simbols
-        if ((ch = nextChar()) != Const.ESC)
+        if ((ch = nextChar()) != Const.SpecialChars.ESC)
             switch(ch){
-                case Const.CR: case Const.LF:
+                case Const.SpecialChars.CR: case Const.SpecialChars.LF:
                     return Const.option.ESC;
                 case Const.DEL:
                     return Const.option.DEL;
@@ -73,13 +73,13 @@ public class EditableBufferedReader extends BufferedReader{
                 if((ch = nextChar()) == '~')
                     return Const.option.SUPR;
             switch(ch){  // Arrows
-                case Const.RIGHT:
+                case Const.arrows.RIGHT:
                     return Const.option.RIGHT;
-                case Const.LEFT:
+                case Const.arrows.LEFT:
                     return Const.option.LEFT;
-                case Const.UP:
+                case Const.arrows.UP:
                     return Const.option.UP;
-                case Const.DOWN:
+                case Const.arrows.DOWN:
                     return Const.option.DOWN;
             }
         }
@@ -92,7 +92,7 @@ public class EditableBufferedReader extends BufferedReader{
                 case Const.F3:
                     return Const.option.END;
             }
-        else if(ch == Const.ESC)
+        else if(ch == Const.SpecialChars.ESC)
             return Const.option.ESC;
         return ch;
     }
