@@ -10,8 +10,14 @@ import java.io.Reader;
  */
 public class RawMode {
     public static void main(String[] args) throws IOException, InterruptedException{
-        String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"};
+        /*  Alternative using sh as an interpreter  */
+        // String[] cmd = {"/bin/sh", "-c", "stty raw </dev/tty"}; 
+        
+        /* Direct mode (without interpreter) */
+        String cmd = "/bin/stty -f /dev/tty -echo raw";
+        
         Runtime.getRuntime().exec(cmd).waitFor();
+        
         Reader reader = System.console().reader();
         StringBuilder line = new StringBuilder();
         int character = 0;
@@ -19,7 +25,8 @@ public class RawMode {
         while((character = reader.read()) != 0x0D)  // Carriage return
             line.append((char)character);
 	System.out.println(line.toString());
-        cmd = new String[] {"/bin/sh", "-c", "stty sane </dev/tty"};
+        //cmd = new String[] {"/bin/sh", "-c", "stty sane </dev/tty"};
+        cmd = "/bin/stty -f /dev/tty -echo cooked";
         Runtime.getRuntime().exec(cmd).waitFor();
     }
 }
