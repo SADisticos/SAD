@@ -1,132 +1,86 @@
 package Other;
 
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 
 /**
  *
  * @author Enric
  */
-public class Trie {
-
-    // Alphabet size (# of symbols)
-    public static final int ASCII = 127;
-
+public class Trie{
     
     // trie node
-    public static class TrieNode{
-        TrieNode[] children = new TrieNode[ASCII];
+    private static class TrieNode{
+        LinkedList<TrieNode> childList;
         
-        // isEndOfWord is true if the node represents end of a word
-        boolean isEndOfWord;
+        // isEnd is true if the node represents end of a word
+        boolean isEnd;
         
         // Action to be done
         int option;
         
-        public TrieNode(){
-            isEndOfWord = false;
+        // Character that the node represents
+        char data;
+        
+        public TrieNode(char c){
+            childList = new LinkedList<TrieNode>();
+            isEnd = false;
+            data = c;
             option = Const.option.YES;
-            for (int i = 0; i < ASCII; i++)
-                children[i] = null;
+        }
+        
+        public TrieNode getChild(char c){
+            if (childList != null)
+                for(TrieNode eachChild: childList)
+                    if (eachChild.data == c)
+                        return eachChild;
+            return null;
         }
     };
     
-    public static TrieNode root;
+    private static TrieNode root;
+    
+    @SuppressWarnings("UnnecessaryUnboxing")
+    public Trie(HashMap<String, Integer> trieMap){
+        root = new TrieNode(' ');
+        trieMap.forEach((k,v) -> insert(k, v.intValue()));
+    }
     
     // If not present, inserts key into trie
     // If the key is prefix of trie node,
     // just marks leaf node
     public static void insert(String key, int option){
-        int level;
-        int length = key.length();
-        int index;
+
+        if(!Arrays.asList(Const.option.YES, Const.option.NO).contains(search(key)))     // If it isn't an option means isn't a keyword
+            return;
         
-        TrieNode pCrawl = root;
-        
-        for (level = 0; level < length; level++){
-            index = key.charAt(level);
-            
-            
-            if (pCrawl.children[index] == null)
-                pCrawl.children[index] = new TrieNode();
-            
-            pCrawl = pCrawl.children[index];
+        TrieNode current = root;
+        for(char ch: key.toCharArray()){
+            TrieNode child = current.getChild(ch);
+            if (child != null)
+                current = child;
+            else{
+                // If child not present, adding it to the list
+                current.childList.add(new TrieNode(ch));
+                current = current.getChild(ch);
+            }
         }
-        
-        // mark last node as leaf
-        pCrawl.isEndOfWord = true;
-        pCrawl.option = option;
+        current.option = option;
+        current.isEnd = true;
     }
+        
     
     // Returns true if key presents in trie, else false
     public static int search(String key){
-        int level;
-        int length = key.length();
-        int index;
-        TrieNode pCrawl = root;
-        
-        for(level = 0; level < length; level++){
-            index = key.charAt(level);
-            
-            if(pCrawl.children[index] == null)
+        TrieNode current = root;
+        for (char ch: key.toCharArray())
+            if (current.getChild(ch) == null)
                 return Const.option.NO;
-                
-            
-            pCrawl = pCrawl.children[index];
-        }
+            else
+                current = current.getChild(ch);
         
-        return (pCrawl != null)? pCrawl.option: Const.option.NO;
+        return current.option;
     }
-    
-    public static void initTree(){
-        List<String> sequences = Arrays.stream(Const.sequence.class.getDeclaredFields())
-                .filter(field -> Modifier.isStatic(field.getModifiers()))
-                .map(field-> {
-                    try{
-                        return (String) field.get(Const.sequence.class);
-                    } catch(IllegalAccessException ex){
-                        throw new RuntimeException(ex);
-                    }
-                })
-                .filter(name -> ! name.equals("NOT_NEEDED_CONSTANT")) // filter out if needed
-                .collect(Collectors.toList());
-        
-        List<Integer> options = Arrays.stream(Const.option.class.getDeclaredFields())
-                .filter(field -> Modifier.isStatic(field.getModifiers()))
-                .map(field-> {
-                    try{
-                        return (Integer) field.get(Const.option.class);
-                    } catch(IllegalAccessException ex){
-                        throw new RuntimeException(ex);
-                    }
-                })
-                .filter(name -> ! name.equals("NOT_NEEDED_CONSTANT")) // filter out if needed
-                .collect(Collectors.toList());
-        
-        ListIterator its = sequences.listIterator();
-        ListIterator ito = options.listIterator();
-        
-        while(its.hasNext() && ito.hasNext())
-            insert((String) its.next(), (int) ito.next());
-    }
-    
-    /*
-    public static void main(String[] args){
-        root = new TrieNode();
-        initTree();
-        
-        StringBuilder sb = new StringBuilder();
-        
-        int option = Const.option.YES;
-        
-        while(option == Const.option.YES){
-            option = search(sb.append(String.valueOf(Const.ESC)).toString());
-            System.out.println(option);
-        }
-        System.out.println(option);
-    }*/  
 }
