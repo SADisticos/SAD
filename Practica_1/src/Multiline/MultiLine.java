@@ -13,13 +13,11 @@ public class MultiLine{
     private StringBuilder line;
     private boolean insertMode;
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private int terminalWidth;
     
-    public MultiLine(int terminalWidth){
-        pos = new Position(terminalWidth);
+    public MultiLine(){
+        pos = new Position();
         insertMode = false;
         line = new StringBuilder();
-        this.terminalWidth = terminalWidth;
     }
     
     public void addPropertyChangeListener(PropertyChangeListener l){
@@ -33,7 +31,7 @@ public class MultiLine{
         if(insertMode && pos.getPos() < line.length()) // insert in the middle
             line.deleteCharAt(pos.getPos());
         line.insert(pos.getPos(),c);
-        pos = new Position(oldPos.getPos()+1, terminalWidth);
+        pos = new Position(oldPos.getPos()+1);
         pcs.firePropertyChange("text", oldLine, this.toString());
         pcs.firePropertyChange("pos", oldPos, pos);
     }
@@ -56,7 +54,7 @@ public class MultiLine{
         }
         else if (move == -1 && pos.getPos() > 0){
             line.deleteCharAt(pos.getPos()-1);
-            pos = new Position(oldPos.getPos()-1, terminalWidth);
+            pos = new Position(oldPos.getPos()-1);
             pcs.firePropertyChange("text", oldLine, this.toString());
             pcs.firePropertyChange("pos", oldPos, pos);
         }
@@ -82,13 +80,13 @@ public class MultiLine{
     
     public void moveCursor(int row, int col){
         Position oldPos = pos;
-        pos = new Position(oldPos.getRow() + row, oldPos.getCol() + col, terminalWidth);
+        pos = new Position(oldPos.getRow() + row, oldPos.getCol() + col);
         if (pos.getPos() > line.length()){
-            pos = new Position(line.length(), terminalWidth);
+            pos = new Position(line.length());
             pcs.firePropertyChange("bell", false, true);
         }
         else if (pos.getPos() < 0){
-            pos = new Position(0, terminalWidth);
+            pos = new Position(0);
             pcs.firePropertyChange("bell", false, true);
         }
         else
@@ -97,13 +95,13 @@ public class MultiLine{
     
     public void cursorAtStart(){
         Position oldPos = pos;
-        pos = new Position(0, terminalWidth);
+        pos = new Position(0);
         pcs.firePropertyChange("pos", oldPos, pos);
     }
     
     public void cursorAtEnd(){
         Position oldPos = pos;
-        pos = new Position(line.length(), terminalWidth);
+        pos = new Position(line.length());
         pcs.firePropertyChange("pos", oldPos, pos);
     }
     
@@ -120,4 +118,3 @@ public class MultiLine{
         return line.toString();
     }
 }
-

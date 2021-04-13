@@ -25,7 +25,7 @@ public class EditableBufferedReader extends BufferedReader{
      */
     public EditableBufferedReader(Reader in) {
         super(in);
-        multiLine = new MultiLine(TerminalWidth.getColumns());
+        multiLine = new MultiLine();
         con = new Console();
         multiLine.addPropertyChangeListener(con);
         trie = new Trie(Const.trieMap.trieMap);
