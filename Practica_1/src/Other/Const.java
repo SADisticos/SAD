@@ -55,6 +55,8 @@ public final class Const {
     public static final String STOPBLINKCURSOR = CSI + "?12l";
     public static final String MOVEFORWARD = CSI + "C";
     public static final String MOVEBACKWARD = CSI + "D";
+    public static final String CLEAR = CSI + "2J";
+    public static final String POSINIT = CSI + "1;1H";
     
         
     // Entry sequences for Trie
