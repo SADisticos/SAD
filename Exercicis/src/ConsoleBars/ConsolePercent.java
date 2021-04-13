@@ -1,7 +1,6 @@
 package ConsoleBars;
 
 import java.util.*;
-import java.io.*;
 
 class ConsolePercent implements Observer {
     static enum Opcode {
