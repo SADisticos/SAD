@@ -1,4 +1,4 @@
-package Proves;
+package Toolkit;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -23,7 +23,7 @@ class ConsolePercent implements Observer {
         model = value;
 		
         // get max columns
-	cmax = Proves.TerminalWidth.getColumns();
+	cmax = Toolkit.TerminalWidth.getColumns();
 	// write 0%
         model.setMax(cmax);
         System.out.print(model.get() + "%");      // Starts at 0

@@ -24,7 +24,7 @@ class ConsoleBar implements Observer {
 		model = value;
 		
 		// get max columns
-                cmax = Proves.TerminalWidth.getColumns();
+                cmax = Toolkit.TerminalWidth.getColumns();
                 model.setMax(cmax);
 	}
 	
