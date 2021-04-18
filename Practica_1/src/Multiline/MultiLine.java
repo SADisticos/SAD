@@ -36,14 +36,6 @@ public class MultiLine{
         pcs.firePropertyChange("pos", oldPos, pos);
     }
     
-    public void deleteCharForward(){
-        deleteChar(1);
-    }
-    
-    public void deleteCharBackward(){
-        deleteChar(-1);
-    }
-    
     public void deleteChar(int move){
         Position oldPos = pos;
         String oldLine = this.toString();
@@ -62,35 +54,14 @@ public class MultiLine{
             pcs.firePropertyChange("bell", false, true);
     }
     
-    public void moveCursorForward(){
-        moveCursor(0,1);
-    }
-    
-    public void moveCursorBackward(){
-        moveCursor(0,-1);
-    }
-    
-    public void moveCursorUp(){
-        moveCursor(-1,0);
-    }
-    
-    public void moveCursorDown(){
-        moveCursor(1,0);
-    }
-    
     public void moveCursor(int row, int col){
         Position oldPos = pos;
         pos = new Position(oldPos.getRow() + row, oldPos.getCol() + col);
-        if (pos.getPos() > line.length()){
-            pos = new Position(line.length());
+        if (pos.getPos() > line.length() || pos.getPos() < 0){
+            pos = oldPos; // It can be done that trick 'cause we only 1 block move
             pcs.firePropertyChange("bell", false, true);
         }
-        else if (pos.getPos() < 0){
-            pos = new Position(0);
-            pcs.firePropertyChange("bell", false, true);
-        }
-        else
-            pcs.firePropertyChange("pos", oldPos, pos);
+        pcs.firePropertyChange("pos", oldPos, pos);
     }
     
     public void cursorAtStart(){
@@ -116,5 +87,32 @@ public class MultiLine{
     @Override
     public String toString(){
         return line.toString();
+    }
+    
+    /* Simplified Functions */
+    // deleteChar
+    public void deleteCharForward(){
+        deleteChar(1);
+    }
+    
+    public void deleteCharBackward(){
+        deleteChar(-1);
+    }
+    
+    // moveCursor
+    public void moveCursorForward(){
+        moveCursor(0,1);
+    }
+    
+    public void moveCursorBackward(){
+        moveCursor(0,-1);
+    }
+    
+    public void moveCursorUp(){
+        moveCursor(-1,0);
+    }
+    
+    public void moveCursorDown(){
+        moveCursor(1,0);
     }
 }

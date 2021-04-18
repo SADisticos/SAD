@@ -3,8 +3,6 @@ package Multiline;
 import Other.Const;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,10 +34,13 @@ public class Console implements PropertyChangeListener, java.io.Serializable{
                 //System.out.print(Const.CSI + pos.getRow() + ";" + pos.getCol() + "H");
                 { // DEBUGGING
                     System.out.print(Const.CSI + "99;1H");
+                    System.out.print(Const.ERASELINE);
                     System.out.print("Position: " + pos.getPos());
                     System.out.print(Const.PREVIOUSLINE);
+                    System.out.print(Const.ERASELINE);
                     System.out.print("Column: " + pos.getCol());
                     System.out.print(Const.PREVIOUSLINE);
+                    System.out.print(Const.ERASELINE);
                     System.out.print("Row: " + pos.getRow());
                 }
                 System.out.print(Const.CSI + pos.getRow() + ";" + pos.getCol() + "H");
