@@ -21,7 +21,9 @@ public class TestReadLine {
         }finally{
             EditableBufferedReader.unsetRaw();
         }
-        System.out.println("\nline is: " + str);
+        System.out.print(Const.POSINIT);
+        System.out.print(Const.CLEAR);
+        System.out.println("line is: " + str);
     }
     
     @SuppressWarnings("CallToPrintStackTrace")
