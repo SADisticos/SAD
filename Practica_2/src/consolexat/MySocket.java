@@ -34,8 +34,8 @@ public class MySocket{
     public MySocket(String host, int port){
         try {
             sock = new Socket(host, port);
-            bf = new BufferedReader(new InputStreamReader(mySock.getInputStream()));
-            pw = new PrintWriter(new OutputStreamWriter(mySock.getOutputStream()));
+            bf = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,8 +44,8 @@ public class MySocket{
     public MySocket(String nick, String host, int port) {
             try {
                    sock = new Socket(host, port);
-                   bf = new BufferedReader(new InputStreamReader(mySock.getInputStream()));
-                   pw = new PrintWriter(new OutputStreamWriter(mySock.getOutputStream()));
+                   bf = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+                   pw = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
                 }   
             catch (IOException e) {
                    e.printStackTrace();
