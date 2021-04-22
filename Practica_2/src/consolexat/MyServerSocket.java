@@ -65,8 +65,8 @@ import java.nio.channels.ServerSocketChannel;
     
      public MySocket myClose(){
         try{
-            Socket MySocket = super.close();
-		    return new MySocket(socket);
+        Socket MySocket = super.close();
+	    return new MySocket(socket);
         }catch(IOException e){
             e.printStackTrace();
             return null;
