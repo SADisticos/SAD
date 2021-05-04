@@ -5,4 +5,10 @@ fun main(){
 
 	for (index in items.indices)
 		println("item at $index is ${items[index]}")
+
+	var index = 0
+	while (index < items.size){
+		println("item at $index is ${items[index]}")
+		index++
+	}
 }
