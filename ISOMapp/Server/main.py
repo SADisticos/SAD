@@ -11,8 +11,15 @@ from _thread import *
 import threading
 
 def escribir_excel(data):
-    # Direcció de l'arxiu
-    filePath = "CONTROL_DINCIDENCIES_2.xlsx"
+    # "Constants" #
+    filePath = "CONTROL_DINCIDENCIES_2.xlsx"    # Direcció de l'arxiu
+    thin_border = Border(left = Side(style='thin'),
+                         right = Side(style='thin'),
+                         top = Side(style='thin'),
+                         bottom = Side(style='thin'))
+    number_format1 = 'General'
+    
+    # Segmentem les dades que ens entren #
     dades= data.split('//')
     centre = dades[0]
     causa = dades[2]
@@ -75,17 +82,40 @@ def escribir_excel(data):
             elif cell.value == "EF.":
                 EFCOL = cell.column
                 DIRCOL = cell.column + 2
+            
+            elif cell.value == "EXECUTOR":
+                EXECOL = cell.column
 
-
+    
+    sheet[cambioletra(CENTCOL) + str(RowIn].border = thin_border
     sheet[cambioletra(CENTCOL) + str(RowIn)] = eleccio_centre(centre)
+    
+    sheet[cambioletra(CLASCOL) + str(RowIn)].border = thin_border
     sheet[cambioletra(CLASCOL) + str(RowIn)] = classificacio
+    
+    sheet[cambioletra(CAUSCOL) + str(RowIn)].border = thin_border
     sheet[cambioletra(CAUSCOL) + str(RowIn)] = causa
+    
+    sheet[cambioletra(INCCOL) + str(RowIn)].border= thin_border
     sheet[cambioletra(INCCOL) + str(RowIn)] = incidencia
+    
+    sheet[cambioletra(ENCOL) + str(RowIn)].border = thin_border
+    
     sheet[cambioletra(ENCOL) + str(RowIn)] = entrada
+    
     sheet[cambioletra(DIRCOL) + str(RowIn)] = direccio
 
+    sheet[cambioletra(SORTCOL) + str(RowIn)].border = thin_border
+    sheet[cambioletra(EFCOL) + str(RowIn)].border = thin_border
     sheet[cambioletra(SORCOL) + str(RowIn)] = '=' + cambioletra(ENCOL) + str(RowIn) + "+" + cambioletra(ESTCOL) + str(RowIn)
     sheet[cambioletra(EFCOL) + str(RowIn)] = '=' + cambioletra(DICOL) + str(RowIn) + "-" + cambioletra(ESTCOL) + str(RowIn)
+    
+    # Les altres 3 celdes que falten
+    sheet[cambioletra(ESTCOL) + str(RowIn)].border = thin_border
+    sheet[cambioletra(ESTCOL) + str(RowIn)].number_format = number_format1
+    sheet[cambioletra(DICOL) + str(RowIn)].border = thin_border
+    sheet[cambioletra(DICOL) + str(RowIn)].number_format = number_format1
+    sheet[cambioletra(EXECOL) + str(RowIn)].border = thin_border
 
     wb.save(filePath)
 
