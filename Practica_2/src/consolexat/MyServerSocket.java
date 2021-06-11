@@ -4,27 +4,29 @@
  * and open the template in the editor.
  */
 package consolexat;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.*;
 
 public class MyServerSocket {
-    ServerSocket ss;
+    ServerSocket serverst;
     BufferedReader br;
     PrintWriter pw;
 
     public MyServerSocket(final int port) {
         try {
-            ss = new ServerSocket(port);
-        } catch (Exception e) {
+            serverst = new ServerSocket(port);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    // Aquets dos mètodes serveixen per crear i tancar un socket
     public MySocket accept() {
         try {
-            return new MySocket(ss.accept());
+            return new MySocket(serverst.accept());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,11 +35,9 @@ public class MyServerSocket {
 
     public void close() {
         try {
-            ss.close();
+            serverst.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    
+    }  
 }
