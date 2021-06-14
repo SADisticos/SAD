@@ -14,66 +14,52 @@ import java.nio.channels.SocketChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 /**
  *
  * @author alber
  */
 
-public class InterficieGraficaSwing {
+public class InterficieGraficaSwing extends JPanel {
     
-        JFrame frame;
+        static JFrame frame;
         SocketChannel socket;
-        String nick;
-        
+        String nick ="ENRIC";
         JPanel userList;
-        private JTextArea messages;
-
+        
+        JList<String> list;
         private DefaultListModel<String> listModel = new DefaultListModel<>();
-        private JList list = new JList<>(listModel);
+        
         private JScrollPane listScrollPane = new JScrollPane(list);
 
-// SI M'HAS DE PASAR PRÀMETRES, QUE SIGUIN EL SOCKETCHANEL, I EL NICK
-    private void createAndShowGUI() {
-        
-        try{
-        //Set the look and feel.
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  
-        }catch(Exception e) {e.printStackTrace();
-        
-        }
-    
-        //Make sure we have nice window decorations.
-        JFrame.setDefaultLookAndFeelDecorated(true);
+        public InterficieGraficaSwing(){
+           super(new BorderLayout());
+           EmptyBorder eborder = new EmptyBorder(10, 10, 10, 10);
 
-        // Create and set up the window.
-        //DINS DE JFRAME PODRIEM FICAR EL NICK
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        list = new JList<String>(listModel);
+        JScrollPane listScrollPane = new JScrollPane(list);
+        listScrollPane.setPreferredSize(new Dimension(500, 500));
+        listScrollPane.setBorder(eborder);
         // Create an output JPanel and add a JTextArea(20, 30) inside a JScrollPane
-        JPanel output = new JPanel(new GridLayout(1,2));
-        messages = new JTextArea(20, 40); //Ho he canviat a 20,40 per a que quedes ben dividit
-        messages.setBackground(new Color(150,150,150));
-        messages.setEditable(false);
-        
-        
-        output.add(new JScrollPane(messages));
-        // Create an input JPanel and add a JTextField(25) and a JButton
-        JPanel input = new JPanel(new FlowLayout()); 
-        JTextField text = new JTextField(25);
-        input.add(text);
-        input.setBackground(Color.black);
+        JPanel input = new JPanel();
+        input.setLayout(new BoxLayout(input, BoxLayout.LINE_AXIS));
+
+        JTextField text = new JTextField(); //size
+        text.setPreferredSize(new Dimension(100, 30));
+
         
         //Afegim primer el botó d'enviar, i li apliquem un actionListener per a que s'activi i mostri el missatge quan apretem
         JButton enviar = new JButton("Enviar"); 
         enviar.setBackground(Color.GREEN);
+        enviar.setPreferredSize(new Dimension(90, 30));
+        
         enviar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 String msg = text.getText();
                 if((msg.length() != 0)){
                     
-                    messages.append(nick +": "+ msg + "\n");
+                    listModel.addElement(nick +": "+ msg + "\n");
                     text.setText("");
 
                     ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -88,40 +74,50 @@ public class InterficieGraficaSwing {
 
             }
         });
-        input.add(enviar);
-        //Botó de SORTIR
-        JButton sortir = new JButton("Sortir");
-        sortir.setBackground(Color.RED);
-        // Per a que pasi algo quan s'apreti Exit
-        sortir.addActionListener(new ActionListener(){
-             @Override
-             public void actionPerformed(ActionEvent e){
-                //Aqui  va el codi que volem que s'executi quan té lloc la acció.
-                frame.dispose();                  
-            }
-        });
-        input.add(sortir);
+        
+        
         //Amb això si s'apreta enter també s'envia
-        frame.getRootPane().setDefaultButton(enviar);
-        
-        //User List
-        userList = new JPanel(new GridLayout(1,2));
-        list.setBackground(Color.black);
-        list.setForeground(Color.gray);
+        input.add(text);
+        input.add(enviar);
+        input.setMinimumSize(new Dimension(200, 40));
+
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        add(listScrollPane, BorderLayout.NORTH);
+        add(input, BorderLayout.SOUTH);
+        setBorder(eborder);
+            //Set enter to activate send button
+        list.setBackground(Color.white);
+        list.setForeground(Color.black);
+
         list.setVisibleRowCount(-1);
+        }
+       
+// SI M'HAS DE PASAR PRÀMETRES, QUE SIGUIN EL SOCKETCHANEL, I EL NICK
+    private void createAndShowGUI() {
         
-        userList.add(listScrollPane, BorderLayout.CENTER);
+        try{
+        //Set the look and feel.
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  
+        }catch(Exception e) {e.printStackTrace();
         
-        // add panels to main frame
-        frame.add(output, BorderLayout.CENTER);
-        frame.add(input, BorderLayout.PAGE_END);
-        frame.add(userList, BorderLayout.EAST);
+        }    
+        //Make sure we have nice window decorations.
+        JFrame.setDefaultLookAndFeelDecorated(true);
+
+        // Create and set up the window.
+        //DINS DE JFRAME PODRIEM FICAR EL NICK
+        frame = new JFrame("CHAT ROOM");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        JComponent newContentPane = new InterficieGraficaSwing();
+        frame.setContentPane(newContentPane);
+      
         //Display the window centered.
         frame.pack();
+        frame.setSize(300,400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
+        frame.setMinimumSize(new Dimension(400, 400));
     }
 
     public static void main(String[] args) {
@@ -130,8 +126,8 @@ public class InterficieGraficaSwing {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                InterficieGraficaSwing inter = new InterficieGraficaSwing();
-                  inter.createAndShowGUI();
+                InterficieGraficaSwing inter= new InterficieGraficaSwing();
+                inter.createAndShowGUI();
                 
             }
         });
