@@ -19,6 +19,9 @@ public class Client {
         SenderThread sndThread = new SenderThread(sck);
         
         sck.println(nick);
+        String l = sck.readLine();
+        String[] msg = Style.parse(l);
+        view.setColor(msg[1]);
         
         new Thread(rcvThread).start();
         new Thread(sndThread).start();
