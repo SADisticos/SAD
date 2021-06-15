@@ -71,18 +71,17 @@ public class Server {
             if (content.length() > 0) {
                 String[] arrayContent = content.toString().split(SEP);
                 if (arrayContent.length == 1) {
-                    String name = arrayContent[0];
-                    users.add(name);
+                    String nick = arrayContent[0];
+                    users.add(nick);
+                    System.out.println(nick + " connected");
 
                 }
-                // Después del registro, envíe un mensaje
                 else if ( arrayContent.length > 1) {
                     String name = arrayContent[0];
                     String message = content.substring(name.length() + SEP.length());
                     message = arrayContent[1];
                     if (users.contains(name)) {
-                        // No enviar de vuelta al cliente que envió este contenido
-                        broadCast(selector, sc, message);
+                        broadCast(selector, sc, name, message);
                     }
                 }
             }
@@ -90,13 +89,14 @@ public class Server {
         }
     }
 
-    public void broadCast(Selector selector, SocketChannel except, String content) throws IOException {
-        System.out.println("Recibido: " + content);
+    public void broadCast(Selector selector, SocketChannel except, String name, String content) throws IOException {
+        System.out.println(name + ": " + content);
+        String message = name + SEP + content;
         for (SelectionKey key : selector.keys()) {
             Channel targetchannel = key.channel();
             if (targetchannel instanceof SocketChannel && targetchannel != except) {
                 SocketChannel dest = (SocketChannel) targetchannel;
-                dest.write(charset.encode(content));
+                dest.write(charset.encode(message));
             }
         }
     }
